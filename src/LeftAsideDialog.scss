@@ -1,0 +1,92 @@
+@charset "utf-8";
+
+@import "todoStyle-variables";
+
+$left-aside-width: 278px;
+$top-search-wrap-height: 46px;
+$account-wrap-height: 50px;
+$account-first-user-name-bk-color: #E76666;
+$account-first-user-name-fg-color: #fff;
+
+$left-aside-word-base-color: #1d1d1d;
+
+.leftAsideWrap {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: $left-aside-width;
+  height: 100%;
+  color: $left-aside-word-base-color;
+
+  // topSearchWrap
+  .topSearchWrap {
+    height: $top-search-wrap-height;
+    display: flex;
+    background-color: $user-dialog-theme-color;
+    align-items: center;
+    .user-dialog-icon{
+      color: #fff;
+    }
+    .search {
+      flex: 1;
+      height: 100%;
+      background-color: inherit;
+    }
+  }
+
+  // acountWrap
+  .accountWrap {
+    display: flex;
+    align-items: center;
+
+    height: $account-wrap-height;
+
+    .firstLetterUserName {
+      display: inline-block;
+      margin-left: 5px;
+      margin-right: 8px;
+      width: 32px;
+      -webkit-border-radius: 16px;
+      -moz-border-radius: 16px;
+      border-radius: 16px;
+      text-align: center;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      color: $account-first-user-name-fg-color;
+      background-color: $account-first-user-name-bk-color;
+    }
+    .username {
+      flex: 1;
+    }
+    .user-dialog-icon-logout{
+      fotn-size: 24px;
+    }
+  }
+  .todoFolderItemWrap {
+    .todoFolderItem {
+      display:flex;
+      align-items: center;
+      height: 38px;
+    }
+    .todo-folder-icon {
+      font-size: 24px;
+    }
+    .todoFolderName {
+      flex: 1;
+    }
+  }
+
+  // createFolder
+  .createFolder{
+    position: absolute;
+    bottom: 0;
+    height: 42px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #bbb;
+    .todo-folder-icon-add{
+      font-size: 24px;
+    }
+  }
+}

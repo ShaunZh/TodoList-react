@@ -9,7 +9,7 @@ import React from 'react';
 
 export default function(props) {
   return (
-    <div className="topWrap">
+    <div className="topSearchWrap">
       <span className="user-dialog-icon user-dialog-icon-category"></span>
       <input type="text" className="search" value=''
       />  {/*onChange=''*/}

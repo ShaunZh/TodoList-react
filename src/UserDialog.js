@@ -4,9 +4,10 @@
 * @Last Modified by:   Marte
 * @Last Modified time: 2017-08-03 21:30:21
 */
-
+import './UserDialog.css'
 import React from 'react';
 import LeftAsideDialog from './LeftAsideDialog';
+
 import ContentDialog from './ContentDialog';
 
 export default class UserDialog extends React.Component {
@@ -22,9 +23,7 @@ export default class UserDialog extends React.Component {
   render() {
     return (
       <div className="userDialogWrap">
-        <div className="leftAside">
-          <LeftAsideDialog/>
-        </div>
+        <LeftAsideDialog/>
         {/*<div className="content">*/}
           {/*<ContentDialog/>*/}
         {/*</div>*/}

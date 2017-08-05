@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,eAAe;EACb,MAAM,EAAE,IAAI",
+"sources": ["UserDialog.scss"],
+"names": [],
+"file": "UserDialog.css"
+}

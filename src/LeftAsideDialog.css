@@ -1,0 +1,59 @@
+.leftAsideWrap {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 278px;
+  height: 100%;
+  color: #1d1d1d; }
+  .leftAsideWrap .topSearchWrap {
+    height: 46px;
+    display: flex;
+    background-color: #668964;
+    align-items: center; }
+    .leftAsideWrap .topSearchWrap .user-dialog-icon {
+      color: #fff; }
+    .leftAsideWrap .topSearchWrap .search {
+      flex: 1;
+      height: 100%;
+      background-color: inherit; }
+  .leftAsideWrap .accountWrap {
+    display: flex;
+    align-items: center;
+    height: 50px; }
+    .leftAsideWrap .accountWrap .firstLetterUserName {
+      display: inline-block;
+      margin-left: 5px;
+      margin-right: 8px;
+      width: 32px;
+      -webkit-border-radius: 16px;
+      -moz-border-radius: 16px;
+      border-radius: 16px;
+      text-align: center;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      color: #fff;
+      background-color: #E76666; }
+    .leftAsideWrap .accountWrap .username {
+      flex: 1; }
+    .leftAsideWrap .accountWrap .user-dialog-icon-logout {
+      fotn-size: 24px; }
+  .leftAsideWrap .todoFolderItemWrap .todoFolderItem {
+    display: flex;
+    align-items: center;
+    height: 38px; }
+  .leftAsideWrap .todoFolderItemWrap .todo-folder-icon {
+    font-size: 24px; }
+  .leftAsideWrap .todoFolderItemWrap .todoFolderName {
+    flex: 1; }
+  .leftAsideWrap .createFolder {
+    position: absolute;
+    bottom: 0;
+    height: 42px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #bbb; }
+    .leftAsideWrap .createFolder .todo-folder-icon-add {
+      font-size: 24px; }
+
+/*# sourceMappingURL=LeftAsideDialog.css.map */
