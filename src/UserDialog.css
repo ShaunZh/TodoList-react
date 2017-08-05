@@ -1,4 +1,13 @@
+.userDialogWrap::after,
+.userDialogWrap::before {
+  content: '';
+  display: table; }
+
 .userDialogWrap {
-  height: 100%; }
+  clear: both; }
+
+.userDialogWrap {
+  height: 100%;
+  display: flex; }
 
 /*# sourceMappingURL=UserDialog.css.map */

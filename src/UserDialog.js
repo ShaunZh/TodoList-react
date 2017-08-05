@@ -23,10 +23,8 @@ export default class UserDialog extends React.Component {
   render() {
     return (
       <div className="userDialogWrap">
-        <LeftAsideDialog/>
-        {/*<div className="content">*/}
-          {/*<ContentDialog/>*/}
-        {/*</div>*/}
+        <LeftAsideDialog />
+        <ContentDialog />
       </div>
     )
   }

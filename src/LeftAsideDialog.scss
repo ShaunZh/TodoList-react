@@ -9,11 +9,11 @@ $account-first-user-name-bk-color: #E76666;
 $account-first-user-name-fg-color: #fff;
 
 $left-aside-word-base-color: #1d1d1d;
+$todo-folder-active-bk-color: #e0eefa;
+
 
 .leftAsideWrap {
-  position: fixed;
-  top: 0;
-  bottom: 0;
+
   width: $left-aside-width;
   height: 100%;
   color: $left-aside-word-base-color;
@@ -31,6 +31,9 @@ $left-aside-word-base-color: #1d1d1d;
       flex: 1;
       height: 100%;
       background-color: inherit;
+    }
+    &:hover {
+      cursor: pointer;
     }
   }
 
@@ -61,12 +64,16 @@ $left-aside-word-base-color: #1d1d1d;
     .user-dialog-icon-logout{
       fotn-size: 24px;
     }
+    &:hover {
+      cursor: pointer;
+    }
   }
   .todoFolderItemWrap {
     .todoFolderItem {
       display:flex;
       align-items: center;
       height: 38px;
+      background-color: inherit;
     }
     .todo-folder-icon {
       font-size: 24px;
@@ -74,14 +81,22 @@ $left-aside-word-base-color: #1d1d1d;
     .todoFolderName {
       flex: 1;
     }
+    &:hover {
+      cursor: pointer;
+    }
+    .active {
+      background-color: $todo-folder-active-bk-color;
+    }
   }
+
 
   // createFolder
   .createFolder{
     position: absolute;
     bottom: 0;
     height: 42px;
-    width: 100%;
+    width: inherit;
+    //width: 100%;
     display: flex;
     align-items: center;
     border-top: 1px solid #bbb;

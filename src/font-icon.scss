@@ -10,11 +10,11 @@ $icon-color-logout: #6e6e6e;
 
 @font-face {
   font-family: 'iconfont';  /* project id 374892 */
-  src: url('http://at.alicdn.com/t/font_w3rboi9v8to6r.eot');
-  src: url('http://at.alicdn.com/t/font_w3rboi9v8to6r.eot?#iefix') format('embedded-opentype'),
-  url('http://at.alicdn.com/t/font_w3rboi9v8to6r.woff') format('woff'),
-  url('http://at.alicdn.com/t/font_w3rboi9v8to6r.ttf') format('truetype'),
-  url('http://at.alicdn.com/t/font_w3rboi9v8to6r.svg#iconfont') format('svg');
+  src: url('https://at.alicdn.com/t/font_djsvmeuweofrms4i.eot');
+  src: url('https://at.alicdn.com/t/font_djsvmeuweofrms4i.eot?#iefix') format('embedded-opentype'),
+  url('https://at.alicdn.com/t/font_djsvmeuweofrms4i.woff') format('woff'),
+  url('https://at.alicdn.com/t/font_djsvmeuweofrms4i.ttf') format('truetype'),
+  url('https://at.alicdn.com/t/font_djsvmeuweofrms4i.svg#iconfont') format('svg');
 }
 
 .login-icon {
@@ -24,8 +24,7 @@ $icon-color-logout: #6e6e6e;
   margin-left: 10px;
   margin-right: 10px;
 }
-
-.user-dialog-icon, .todo-folder-icon{
+.user-dialog-icon, .todo-folder-icon, .todo-list-icon{
   font-family: iconfont;
   font-size: 20px;
   margin-left: 10px;
@@ -84,6 +83,31 @@ $icon-color-logout: #6e6e6e;
 .todo-folder-icon-modify:before {
   content: '\e638';
   color: $icon-color-modify;
+}
+
+.todo-list-icon-add:before {
+  content: '\e604';
+  color: #ebe8eb;
+}
+
+.todo-folder-icon-add:before {
+  content: '\e604';
+  color: #1d31e0;
+}
+
+.todo-list-icon-select:before{
+  content: '\e696';
+  color: #999;
+}
+
+.todo-list-icon-selected:before{
+  content: '\e695';
+  color: #999;
+}
+
+.todo-list-icon-flag-false:before {
+  content: '\e603';
+  color: #999;
 }
 
 

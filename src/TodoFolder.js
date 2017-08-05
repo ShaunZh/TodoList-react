@@ -11,7 +11,7 @@ export default function (props) {
   console.log('props');
   console.log(props);
   return (
-    <div className="todoFolderItem" onClick=''>
+    <div className="todoFolderItem"  key={props.key}>
       <span className={"todo-folder-icon " + props.info.iconClassName}></span>
       <span className="todoFolderName">{props.info.name}</span>
       <span className="todoSum">{props.info.todoListSum}</span>

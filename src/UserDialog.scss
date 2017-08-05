@@ -1,3 +1,17 @@
+.userDialogWrap::after,
+.userDialogWrap::before {
+  content: '';
+  display: table;
+}
+
+.userDialogWrap {
+  clear: both;
+}
+
 .userDialogWrap{
   height: 100%;
+  display: flex;
+  
 }
+
+

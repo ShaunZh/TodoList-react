@@ -19,41 +19,45 @@ export default class LeftAsideDialog extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      searchStr: '',
       accountInfo: {
         username: '大风筝的小小马'
       },
-      defaultTodoFolder: [
-        {name: '我的一天', todoListSum: 0, iconClassName: 'todo-folder-icon-day'},
-        {name: '已加标记', todoListSum: 0, iconClassName: 'todo-folder-icon-flag'},
-        {name: 'Todo', todoListSum: 0, iconClassName: 'todo-folder-icon-todo'},
-      ],
-      userTodoFolder: [
-        {name: '前端学习', todoListSum:0 , iconClassName: 'todo-folder-icon-default'}
+      todoFolders: [
+        {name: '我的一天', todoListSum: 0, isDelete: false, iconClassName: 'todo-folder-icon-day'},
+        {name: '已加标记', todoListSum: 0, isDelete: false, iconClassName: 'todo-folder-icon-flag'},
+        {name: 'Todo', todoListSum: 0, isDelete: false, iconClassName: 'todo-folder-icon-todo'},
+        {name: '前端学习', todoListSum:0 , isDelete: true, iconClassName: 'todo-folder-icon-default'}
       ]
     };
+  };
+
+  searchTodo(key, e) {
+    let stateCopy = JSON.parse(JSON.stringify(this.state));
+    stateCopy.searchStr = e.target.value;
+    this.setState(stateCopy);
   };
 
 
   render() {
 
-    let defaultTodoFolders = this.state.defaultTodoFolder.map((item, index) => {
+    let todoFolders = this.state.todoFolders.map((item, index) => {
       return (
-        <TodoFolder info={item} />
-      );
-    });
-    let userTodoFolders = this.state.userTodoFolder.map((item, index) => {
-      return (
-        <TodoFolder info={item} />
+        <TodoFolder key={index.toString()} info={item}
+          />
       );
     });
 
+
     return (
       <div className="leftAsideWrap">
-        <TopSearch/>
+        <TopSearch searchStr={this.state.searchStr}
+                   searchTodo={this.searchTodo.bind(this)}
+        />
+
         <Account accountInfo={this.state.accountInfo}/>
         <div className="todoFolderItemWrap">
-          {defaultTodoFolders}
-          {userTodoFolders}
+          {todoFolders}
         </div>
         <CreateFolder />
       </div>
