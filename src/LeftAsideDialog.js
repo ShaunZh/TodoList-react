@@ -14,7 +14,9 @@ export default class LeftAsideDialog extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: '',
+      accountInfo: {
+        username: '放风筝的小小马'
+      },
       defaultTodoFolder: [
         {name: '我的一天', todoListSum: 0},
         {name: '已加标记', todoListSum: 0},
@@ -26,23 +28,27 @@ export default class LeftAsideDialog extends Component {
     };
   };
 
-  dispTodoFolderItem() {
-    this.state.defaultTodoFolder.forEach((item) => {
-      <TodoFolder info={item} />
-    });
-
-    this.state.userTodoFolder.forEach((item) => {
-      <TodoFolder info={item} />
-    });
-  };
 
   render() {
+
+    let defaultTodoFolders = this.state.defaultTodoFolder.map((item, index) => {
+      return (
+        <TodoFolder info={item} />
+      );
+    });
+    let userTodoFolders = this.state.userTodoFolder.map((item, index) => {
+      return (
+        <TodoFolder info={item} />
+      );
+    });
+
     return (
       <div className="leftAsideWrap">
         <TopSearch/>
-        <Account />
+        <Account accountInfo={this.state.accountInfo}/>
         <div className="todoFolderItemWrap">
-          {this.dispTodoFolderItem()}
+          {defaultTodoFolders}
+          {userTodoFolders}
         </div>
         <CreateFolder />
       </div>

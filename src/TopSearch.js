@@ -12,8 +12,8 @@ export default function(props) {
     <div className="topWrap">
       <span className="user-dialog-icon user-dialog-icon-category"></span>
       <input type="text" className="search" value=''
-      onChange=''/>
-      <span className="user-dialog-icon user-dialog-icon-search" onClick=''></span>
+      />  {/*onChange=''*/}
+      <span className="user-dialog-icon user-dialog-icon-search" ></span>  {/*onClick=''*/}
     </div>
   );
 }

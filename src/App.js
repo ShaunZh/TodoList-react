@@ -14,7 +14,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentTab: 'loginDialog'// 'userDialog', // 或 loginDialog
+      currentTab: 'userDialog', // 或 loginDialog
     }
   }
 

@@ -25,9 +25,9 @@ export default class UserDialog extends React.Component {
         <div className="leftAside">
           <LeftAsideDialog/>
         </div>
-        <div className="content">
-          <ContentDialog/>
-        </div>
+        {/*<div className="content">*/}
+          {/*<ContentDialog/>*/}
+        {/*</div>*/}
       </div>
     )
   }

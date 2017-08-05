@@ -8,6 +8,8 @@
 import React from 'react';
 
 export default function (props) {
+  console.log('props');
+  console.log(props);
   return (
     <div className="todoFolderItem" onClick=''>
       <span className="todo-folder-icon todo-folder-icon-day"></span>
