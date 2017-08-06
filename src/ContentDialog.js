@@ -28,7 +28,7 @@ export default class ContentDialog extends Component {
           {todoName: '第一个任务', username: 'hexon', finishedTime: '2017/8/7', createTime: '2017/8/6', isFlag: false},
           {todoName: '第一个任务', username: 'hexon', finishedTime: '2017/8/7', createTime: '2017/8/6', isFlag: false},
           {todoName: '第一个任务', username: 'hexon', finishedTime: '2017/8/7', createTime: '2017/8/6', isFlag: false},
-          {todoName: '第一个任务', username: 'hexon', finishedTime: '2017/8/7', createTime: '2017/8/6', isFlag: false}
+          {todoName: '第一个任务', username: 'hexon', finishedTime: '2017/8/7', createTime: '2017/8/6', isFlag: false},
         ]
       }
     };
@@ -67,7 +67,7 @@ export default class ContentDialog extends Component {
            <span className={"todo-list-icon todo-list-icon-flag-"+item.isFlag}></span>
         </li>
       );
-    })
+    });
     return (
       <div className="contentWrap">
         <div className="folder-title-wrap">

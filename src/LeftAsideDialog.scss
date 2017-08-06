@@ -1,15 +1,14 @@
 @charset "utf-8";
 
 @import "todoStyle-variables";
+@import "PublicStyle";
 
 $left-aside-width: 278px;
 $top-search-wrap-height: 46px;
 $account-wrap-height: 50px;
-$account-first-user-name-bk-color: #E76666;
-$account-first-user-name-fg-color: #fff;
-
 $left-aside-word-base-color: #1d1d1d;
 $todo-folder-active-bk-color: #e0eefa;
+
 
 
 .leftAsideWrap {
@@ -45,18 +44,7 @@ $todo-folder-active-bk-color: #e0eefa;
     height: $account-wrap-height;
 
     .firstLetterUserName {
-      display: inline-block;
-      margin-left: 5px;
-      margin-right: 8px;
-      width: 32px;
-      -webkit-border-radius: 16px;
-      -moz-border-radius: 16px;
-      border-radius: 16px;
-      text-align: center;
-      padding-top: 8px;
-      padding-bottom: 8px;
-      color: $account-first-user-name-fg-color;
-      background-color: $account-first-user-name-bk-color;
+      @extend %firstName;
     }
     .username {
       flex: 1;
@@ -91,7 +79,7 @@ $todo-folder-active-bk-color: #e0eefa;
 
 
   // createFolder
-  .createFolder{
+  .createFolderAction{
     position: absolute;
     bottom: 0;
     height: 42px;

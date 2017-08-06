@@ -1,0 +1,70 @@
+.createFolder form .accountInfoWrap .firstLetterUserName {
+  display: inline-block;
+  margin-left: 5px;
+  margin-right: 8px;
+  width: 32px;
+  -webkit-border-radius: 16px;
+  -moz-border-radius: 16px;
+  border-radius: 16px;
+  text-align: center;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  color: #fff;
+  background-color: #E76666; }
+
+.createFolder form .btn-group .cancel-btn, .createFolder form .btn-group .confirm-btn {
+  padding: 8px 45px;
+  font-size: 13px;
+  font-weight: bolder;
+  border-radius: 4px;
+  text-align: center; }
+  .createFolder form .btn-group .cancel-btn:hover, .createFolder form .btn-group .confirm-btn:hover {
+    cursor: pointer; }
+
+.createFolder form .btn-group .cancel-btn {
+  background-color: inherit;
+  border: 1px solid #bbb; }
+
+.createFolder form .btn-group .confirm-btn {
+  background-color: #2b88d9;
+  color: #fff; }
+  .createFolder form .btn-group .confirm-btn:hover {
+    background-color: #4094dd; }
+
+.createFolder {
+  position: fixed;
+  top: 30%;
+  left: 30%; }
+  .createFolder form {
+    border: 1px solid #bbb;
+    width: 390px;
+    height: 220px;
+    box-shadow: 0 0 4px #bbb; }
+    .createFolder form h3 {
+      margin-top: 15px;
+      margin-bottom: 10px;
+      text-align: center; }
+    .createFolder form input {
+      width: 364px;
+      margin: 10px;
+      padding: 10px 10px;
+      border: 1px solid #bbb; }
+    .createFolder form .accountInfoWrap {
+      display: flex;
+      align-items: center;
+      height: 56px;
+      padding: 0 10px;
+      border-bottom: 1px solid #bbb;
+      font-size: 13px;
+      background-color: #FAFAFA; }
+      .createFolder form .accountInfoWrap .username {
+        font-weight: bolder; }
+      .createFolder form .accountInfoWrap .email {
+        color: #999; }
+    .createFolder form .btn-group {
+      margin-top: 10px;
+      float: right; }
+      .createFolder form .btn-group button {
+        margin-right: 15px; }
+
+/*# sourceMappingURL=CreateFolder.css.map */

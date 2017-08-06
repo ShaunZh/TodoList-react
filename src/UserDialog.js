@@ -9,12 +9,16 @@ import React from 'react';
 import LeftAsideDialog from './LeftAsideDialog';
 
 import ContentDialog from './ContentDialog';
+import CreateFolder from './CreateFolder';
 
 export default class UserDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      accountInfo: {
+        username: '放风筝的小小马',
+        email: '308826842@.com'
+      }
     };
   }
 
@@ -25,6 +29,8 @@ export default class UserDialog extends React.Component {
       <div className="userDialogWrap">
         <LeftAsideDialog />
         <ContentDialog />
+        {/*<CreateFolder accountInfo={this.state.accountInfo}/>*/}
+
       </div>
     )
   }

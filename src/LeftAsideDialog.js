@@ -11,7 +11,7 @@ import React, {Component} from 'react';
 import TopSearch from './TopSearch';
 import Account from './Account';
 import TodoFolder from './TodoFolder';
-import CreateFolder from './CreateFolder';
+//import CreateFolder from './CreateFolder';
 
 
 
@@ -59,7 +59,11 @@ export default class LeftAsideDialog extends Component {
         <div className="todoFolderItemWrap">
           {todoFolders}
         </div>
-        <CreateFolder />
+
+        <div className="createFolderAction" onClick=''>
+          <sapn className="todo-folder-icon todo-folder-icon-add"></sapn>
+          <span className="todoFolderName">创建清单</span>
+        </div>
       </div>
     );
   }
