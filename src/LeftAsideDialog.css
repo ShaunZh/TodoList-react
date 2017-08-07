@@ -62,5 +62,7 @@
     border-top: 1px solid #bbb; }
     .leftAsideWrap .createFolderAction .todo-folder-icon-add {
       font-size: 24px; }
+    .leftAsideWrap .createFolderAction:hover {
+      cursor: pointer; }
 
 /*# sourceMappingURL=LeftAsideDialog.css.map */

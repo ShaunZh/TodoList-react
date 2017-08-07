@@ -41,9 +41,9 @@ export default class LeftAsideDialog extends Component {
 
   render() {
 
-    let todoFolders = this.state.todoFolders.map((item, index) => {
+    let todoFolders = this.props.todoInfo.map((item, index) => {
       return (
-        <TodoFolder key={index.toString()} info={item}
+        <TodoFolder key={index.toString()} todoFolderInfo={item} onClick={this.props.onClickCurFolder}
           />
       );
     });
@@ -60,7 +60,7 @@ export default class LeftAsideDialog extends Component {
           {todoFolders}
         </div>
 
-        <div className="createFolderAction" onClick=''>
+        <div className="createFolderAction" onClick={this.props.createFolder}>
           <sapn className="todo-folder-icon todo-folder-icon-add"></sapn>
           <span className="todoFolderName">创建清单</span>
         </div>

@@ -5,17 +5,30 @@
  * @Last Modified time: 2017/8/5 10:01
  */ 
 import React, {Component} from 'react';
+import $ from 'jquery';
 
 import './CreateFolder.css';
+
+
+function keySubmit(props, e) {
+  if (e.key === 'Enter') {
+    if (e.target.value.trim() !== '') {
+      props.onSubmit(e);
+    }
+  }
+}
+
 
 export default function(props) {
 
     return (
       <div className="createFolder">
-        <form onSubmit=''>
+        <form>
           <h3>创建新清单</h3>
-          <input type="text" value="" placeholder="清单名称"
-                 onChange=''/>
+          <input type="text" value={props.newFolder.title} placeholder="清单名称"
+                 onChange={props.onChange}
+                 onKeyPress={keySubmit.bind(null, props)}
+          />
           <div className="accountInfoWrap">
             <span className="firstLetterUserName">{props.accountInfo.username.split('')[0]}</span>
             <div className="accountInfo">
@@ -24,8 +37,8 @@ export default function(props) {
             </div>
           </div>
           <div className="btn-group">
-            <button className="cancel-btn">取消</button>
-            <button className="confirm-btn">保存</button>
+            <button className="cancel-btn" onClick={props.onCancel}>取消</button>
+            <button className="confirm-btn" onClick={props.onSubmit}>保存</button>
           </div>
         </form>
       </div>

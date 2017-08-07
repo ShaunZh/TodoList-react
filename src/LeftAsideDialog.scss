@@ -91,5 +91,8 @@ $todo-folder-active-bk-color: #e0eefa;
     .todo-folder-icon-add{
       font-size: 24px;
     }
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

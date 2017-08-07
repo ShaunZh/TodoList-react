@@ -8,6 +8,7 @@ import './UserDialog.css'
 import React from 'react';
 import LeftAsideDialog from './LeftAsideDialog';
 
+import $ from 'jquery';
 import ContentDialog from './ContentDialog';
 import CreateFolder from './CreateFolder';
 
@@ -18,19 +19,79 @@ export default class UserDialog extends React.Component {
       accountInfo: {
         username: '放风筝的小小马',
         email: '308826842@.com'
-      }
+      },
+      curSelectTodoFolder: {},
+      newFolder: {},
+      newList: {}
+
     };
+  }
+
+  componentWillMount() {
+    let stateCopy = JSON.parse(JSON.stringify(this.state));
+    stateCopy.curSelectTodoFolder = this.props.todoInfo[0];
+    this.setState(stateCopy);
+    console.log('hhhh');
+  }
+
+
+  // 点击清单回调函数
+  curClickFolder(e) {
+    let $target = $(e.target);
+
+    if ($target.hasClass('todoFolderItem') ||
+        ($target.parent().eq(0).hasClass('todoFolderItem')) && !$target.parent().eq(0).hasClass('todo-folder-icon-modify')) {
+
+      let $folder = $target.hasClass('todoFolderItem') ? $target : $target.parent().eq(0);
+      let key = $folder.parent().eq(0).children().index($folder);
+      let stateCopy = JSON.parse(JSON.stringify(this.state));
+
+      stateCopy.curSelectTodoFolder = this.props.todoInfo[key];
+      this.setState(stateCopy);
+    }
   }
 
 
 
+  // 创建清单
+  createFolder(e) {
+    let $target = $(e.target);
+    let title = '';
+    if ($target.get(0).tagName.toLowerCase() === 'input') {
+      title = $target.value;
+      $target.value = '';
+    } else if ($target.tagName.get(0).toLowerCase() === 'button') {
+      title = $target.parent().eq(0).siblings('input').value;
+      $target.parent().eq(0).siblings('input').value = '';
+    }
+    console.log(title);
+  }
+
+
+  newFolderTitleChange(e) {
+    let stateCopy = JSON.parse(JSON.stringify(this.state));
+    stateCopy.newFolder.title = e.target.value;
+    this.setState(stateCopy);
+  }
+
+  cancelCreateFolder(e) {
+    let $target = $(e.target);
+    $target.parent().eq(0).siblings('input').value = '';
+    console.log('取消')
+  }
+
+
   render() {
+    console.log('todoInfo');
+    console.log(this.props.todoInfo);
     return (
       <div className="userDialogWrap">
-        <LeftAsideDialog />
-        <ContentDialog />
-        {/*<CreateFolder accountInfo={this.state.accountInfo}/>*/}
-
+        <LeftAsideDialog todoInfo={this.props.todoInfo} onClickCurFolder={this.curClickFolder.bind(this)}/>
+        <ContentDialog todoFolderInfo={this.state.curSelectTodoFolder} />
+        <CreateFolder accountInfo={this.state.accountInfo} newFolder={this.state.newFolder}
+        onChange={this.newFolderTitleChange.bind(this)}
+        onSubmit={this.createFolder.bind(this)}
+        onCancel={this.cancelCreateFolder.bind(this)}/>
       </div>
     )
   }

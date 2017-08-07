@@ -8,6 +8,7 @@
 
 .userDialogWrap {
   height: 100%;
-  display: flex; }
+  display: flex;
+  position: relative; }
 
 /*# sourceMappingURL=UserDialog.css.map */

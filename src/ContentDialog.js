@@ -13,24 +13,24 @@ export default class ContentDialog extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      todoFolderInfo: {
-        // 当前选中folder的名字
-        folderName: '我的Todo',
-        // 未完成的todos
-        unfinishedTodos: [
-          {todoName: '第一个任务', createTime: '2017/8/6', isFlag: false},
-          {todoName: '第一个任务', createTime: '2017/8/6', isFlag: false},
-          {todoName: '第一个任务', createTime: '2017/8/6', isFlag: false},
-          {todoName: '第一个任务', createTime: '2017/8/6', isFlag: false}
-        ],
-        // 已完成的todos
-        finishedTodos: [
-          {todoName: '第一个任务', username: 'hexon', finishedTime: '2017/8/7', createTime: '2017/8/6', isFlag: false},
-          {todoName: '第一个任务', username: 'hexon', finishedTime: '2017/8/7', createTime: '2017/8/6', isFlag: false},
-          {todoName: '第一个任务', username: 'hexon', finishedTime: '2017/8/7', createTime: '2017/8/6', isFlag: false},
-          {todoName: '第一个任务', username: 'hexon', finishedTime: '2017/8/7', createTime: '2017/8/6', isFlag: false},
-        ]
-      }
+      // todoFolderInfo: {
+      //   // 当前选中folder的名字
+      //   folderName: '我的Todo',
+      //   // 未完成的todos
+      //   unfinishedTodos: [
+      //     {todoName: '第一个任务', createTime: '2017/8/6', isFlag: false},
+      //     {todoName: '第一个任务', createTime: '2017/8/6', isFlag: false},
+      //     {todoName: '第一个任务', createTime: '2017/8/6', isFlag: false},
+      //     {todoName: '第一个任务', createTime: '2017/8/6', isFlag: false}
+      //   ],
+      //   // 已完成的todos
+      //   finishedTodos: [
+      //     {todoName: '第一个任务', username: 'hexon', finishedTime: '2017/8/7', createTime: '2017/8/6', isFlag: false},
+      //     {todoName: '第一个任务', username: 'hexon', finishedTime: '2017/8/7', createTime: '2017/8/6', isFlag: false},
+      //     {todoName: '第一个任务', username: 'hexon', finishedTime: '2017/8/7', createTime: '2017/8/6', isFlag: false},
+      //     {todoName: '第一个任务', username: 'hexon', finishedTime: '2017/8/7', createTime: '2017/8/6', isFlag: false},
+      //   ]
+      // }
     };
   };
 
@@ -41,7 +41,8 @@ export default class ContentDialog extends Component {
 
 
   render() {
-    let unfinishedTodos = this.state.todoFolderInfo.unfinishedTodos.map((item, index) => {
+    console.log(this.props.todoFolderInfo);
+    let unfinishedTodos = this.props.todoFolderInfo.unfinishedTodos.map((item, index) => {
       return (
         <li key={index.toString()} className="todoItem">
           <span className="todo-list-icon todo-list-icon-select"></span>
@@ -52,7 +53,7 @@ export default class ContentDialog extends Component {
       )
     });
 
-    let finishedTodos = this.state.todoFolderInfo.finishedTodos.map((item, index) => {
+    let finishedTodos = this.props.todoFolderInfo.finishedTodos.map((item, index) => {
       return (
          <li key={index.toString()} className="todoItem">
            <span className="todo-list-icon todo-list-icon-selected"></span>
@@ -71,7 +72,7 @@ export default class ContentDialog extends Component {
     return (
       <div className="contentWrap">
         <div className="folder-title-wrap">
-          <h3>{this.state.todoFolderInfo.folderName}</h3>
+          <h3>{this.props.todoFolderInfo.folderName}</h3>
         </div>
         <AddTodo />
         <ul className="unfinishedTodoItemsWrap">
