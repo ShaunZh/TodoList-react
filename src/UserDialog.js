@@ -16,10 +16,6 @@ export default class UserDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      accountInfo: {
-        username: '放风筝的小小马',
-        email: '308826842@.com'
-      },
       curSelectTodoFolder: {},
       newFolder: {},
       newList: {}
@@ -32,22 +28,6 @@ export default class UserDialog extends React.Component {
     stateCopy.curSelectTodoFolder = this.props.todoInfo[0];
     this.setState(stateCopy);
     console.log('hhhh');
-  }
-
-  // 点击清单回调函数
-  curClickFolder(e) {
-    let $target = $(e.target);
-
-    if ($target.hasClass('todoFolderItem') ||
-        ($target.parent().eq(0).hasClass('todoFolderItem')) && !$target.parent().eq(0).hasClass('todo-folder-icon-modify')) {
-
-      let $folder = $target.hasClass('todoFolderItem') ? $target : $target.parent().eq(0);
-      let key = $folder.parent().eq(0).children().index($folder);
-      let stateCopy = JSON.parse(JSON.stringify(this.state));
-
-      stateCopy.curSelectTodoFolder = this.props.todoInfo[key];
-      this.setState(stateCopy);
-    }
   }
 
 
@@ -69,9 +49,13 @@ export default class UserDialog extends React.Component {
     console.log(this.props.todoInfo);
     return (
       <div className="userDialogWrap">
-        <LeftAsideDialog todoInfo={this.props.todoInfo} onClickCurFolder={this.curClickFolder.bind(this)}/>
-        <ContentDialog todoFolderInfo={this.state.curSelectTodoFolder} />
-        <CreateFolder accountInfo={this.state.accountInfo} newFolder={this.state.newFolder}
+        <LeftAsideDialog todoInfo={this.props.todoInfo} onClickCurFolder={this.props.onClickFolder.bind(this)}/>
+        <ContentDialog todoFolderInfo={this.props.todoInfo[this.props.curFolder]}
+                       newTodoTitle={this.props.newTodoTitle}
+                       onSubmitAddTodoList={this.props.onSubmitAddTodoList.bind(this)}
+                       onChangeNewTodo={this.props.onChangeNewTodo.bind(this)}/>
+
+        <CreateFolder accountInfo={this.props.appState.accountInfo} newFolder={this.state.newFolder}
         onChange={this.newFolderTitleChange.bind(this)}
         onSubmit={this.props.onSubmitNewFolder.bind(this)}
         onCancel={this.cancelCreateFolder.bind(this)}/>

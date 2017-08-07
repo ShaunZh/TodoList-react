@@ -19,8 +19,8 @@ export default function(props) {
   return (
     <div className="addTodoWrap">
       <span className="todo-list-icon todo-list-icon-add"></span>
-      <input type="text" placeholder="添加任务" value=''
-      onChange=''
+      <input type="text" placeholder="添加任务" value={props.newTodoTitle}
+      onChange={props.onChange}
       onKeyPress={submit.bind(null, props)}/>
     </div>
   )

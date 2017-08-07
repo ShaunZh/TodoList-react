@@ -31,6 +31,7 @@ export default class ContentDialog extends Component {
       //     {todoName: '第一个任务', username: 'hexon', finishedTime: '2017/8/7', createTime: '2017/8/6', isFlag: false},
       //   ]
       // }
+
     };
   };
 
@@ -41,6 +42,7 @@ export default class ContentDialog extends Component {
 
 
   render() {
+    console.log('content');
     console.log(this.props.todoFolderInfo);
     let unfinishedTodos = this.props.todoFolderInfo.unfinishedTodos.map((item, index) => {
       return (
@@ -69,12 +71,19 @@ export default class ContentDialog extends Component {
         </li>
       );
     });
+
+
+
     return (
       <div className="contentWrap">
         <div className="folder-title-wrap">
           <h3>{this.props.todoFolderInfo.folderName}</h3>
         </div>
-        <AddTodo />
+        <AddTodo newTodoTitle={this.props.newTodoTitle}
+                 onChange={this.props.onChangeNewTodo.bind(this)}
+                 onSubmit={this.props.onSubmitAddTodoList.bind(this)}
+         />
+
         <ul className="unfinishedTodoItemsWrap">
           {unfinishedTodos}
         </ul>

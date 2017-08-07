@@ -8,6 +8,7 @@ import './App.css';
 
 
 import $ from 'jquery';
+import moment from 'moment';
 
 import LoginDialog from './LoginDialog';
 import UserDialog from './UserDialog';
@@ -18,7 +19,12 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      currentFolderIndex: 0,
       currentTab: 'userDialog', // 或 loginDialog
+      accountInfo: {
+        username: '放风筝的小小马',
+        email: '308826842@.com'
+      },
       todoInfo: [
         {
           // 清单名称
@@ -58,7 +64,16 @@ class App extends Component {
         }
       ],
       newFolder: {},
+      newTodo : {
+        // title: '', creater: '', time: ''
+      },
     };
+  }
+
+  onChangeNewTodo(e) {
+    let stateCopy = JSON.parse(JSON.stringify(this.state));
+    stateCopy.newTodo.title = e.target.value;
+    this.setState(stateCopy);
   }
 
 
@@ -69,8 +84,8 @@ class App extends Component {
     if ($target.get(0).tagName.toLowerCase() === 'input') {
       title = $target.val('');
     } else if ($target.get(0).tagName.toLowerCase() === 'button') {
-      title = $target.parent().eq(0).siblings('input').val();
-      $target.parent().eq(0).siblings('input').val('');
+      title = $target.parent().eq(0).siblings('input').eq(0).val();
+      $target.parent().eq(0).siblings('input').eq(0).val('');
     }
     if (title !== '') {
       let newFolder = {
@@ -85,7 +100,36 @@ class App extends Component {
       };
 
       let stateCopy = JSON.parse(JSON.stringify(this.state));
-      stateCopy.todoInfo.push(newFolder);
+      stateCopy.todoInfo.unshift(newFolder);
+      this.setState(stateCopy);
+    }
+  }
+
+  // 创建todolist
+  onSubmitAddTodoList(e) {
+    let date = moment().format('YYYY/MM/DD');
+    let todoList = {
+      todoName: e.target.value,
+      createTime: date,
+      isFlag: false
+    };
+    let stateCopy = JSON.parse(JSON.stringify(this.state));
+    stateCopy.todoInfo[stateCopy.currentFolderIndex].unfinishedTodos.unshift(todoList);
+    stateCopy.newTodo.title = '';
+    this.setState(stateCopy);
+  }
+
+  // 点击清单回调函数
+  curClickFolder(e) {
+    let $target = $(e.target);
+
+    if ($target.hasClass('todoFolderItem') ||
+      ($target.parent().eq(0).hasClass('todoFolderItem')) && !$target.parent().eq(0).hasClass('todo-folder-icon-modify')) {
+
+      let $folder = $target.hasClass('todoFolderItem') ? $target : $target.parent().eq(0);
+      let key = $folder.parent().eq(0).children().index($folder);
+      let stateCopy = JSON.parse(JSON.stringify(this.state));
+      stateCopy.currentFolderIndex = key;
       this.setState(stateCopy);
     }
   }
@@ -98,8 +142,12 @@ class App extends Component {
       <div className="container">
         {this.state.currentTab === 'loginDialog' ?
           <LoginDialog /> :
-          <UserDialog todoInfo={this.state.todoInfo}
-          onSubmitNewFolder={this.onSubmitNewFolder.bind(this)}/>
+          <UserDialog appState={this.state} curFolder={this.state.currentFolderIndex} todoInfo={this.state.todoInfo}
+                      newTodoTitle={this.state.newTodo.title}
+          onSubmitNewFolder={this.onSubmitNewFolder.bind(this)}
+          onSubmitAddTodoList={this.onSubmitAddTodoList.bind(this)}
+          onClickFolder={this.curClickFolder.bind(this)}
+          onChangeNewTodo={this.onChangeNewTodo.bind(this)} />
         }
       </div>
     );
