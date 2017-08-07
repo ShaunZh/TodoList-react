@@ -6,8 +6,12 @@ import 'normalize.css';
 import './reset.css';
 import './App.css';
 
+
+import $ from 'jquery';
+
 import LoginDialog from './LoginDialog';
 import UserDialog from './UserDialog';
+
 
 
 class App extends Component {
@@ -52,16 +56,50 @@ class App extends Component {
           finishedTodos: [
           ]
         }
-      ]
+      ],
+      newFolder: {},
     };
   }
 
+
+  // 创建清单
+  onSubmitNewFolder(e) {
+    let $target = $(e.target);
+    let title = '';
+    if ($target.get(0).tagName.toLowerCase() === 'input') {
+      title = $target.val('');
+    } else if ($target.get(0).tagName.toLowerCase() === 'button') {
+      title = $target.parent().eq(0).siblings('input').val();
+      $target.parent().eq(0).siblings('input').val('');
+    }
+    if (title !== '') {
+      let newFolder = {
+        // 清单名称
+        folderName: title,
+          // 未完成的todos
+        unfinishedTodos: [
+        ],
+        // 已完成的todos
+         finishedTodos: [
+        ]
+      };
+
+      let stateCopy = JSON.parse(JSON.stringify(this.state));
+      stateCopy.todoInfo.push(newFolder);
+      this.setState(stateCopy);
+    }
+  }
+
+
+
   render() {
+    console.log('更新');
     return (
       <div className="container">
         {this.state.currentTab === 'loginDialog' ?
           <LoginDialog /> :
-          <UserDialog todoInfo={this.state.todoInfo}/>
+          <UserDialog todoInfo={this.state.todoInfo}
+          onSubmitNewFolder={this.onSubmitNewFolder.bind(this)}/>
         }
       </div>
     );

@@ -34,7 +34,6 @@ export default class UserDialog extends React.Component {
     console.log('hhhh');
   }
 
-
   // 点击清单回调函数
   curClickFolder(e) {
     let $target = $(e.target);
@@ -52,32 +51,16 @@ export default class UserDialog extends React.Component {
   }
 
 
-
-  // 创建清单
-  createFolder(e) {
+  cancelCreateFolder(e) {
     let $target = $(e.target);
-    let title = '';
-    if ($target.get(0).tagName.toLowerCase() === 'input') {
-      title = $target.value;
-      $target.value = '';
-    } else if ($target.tagName.get(0).toLowerCase() === 'button') {
-      title = $target.parent().eq(0).siblings('input').value;
-      $target.parent().eq(0).siblings('input').value = '';
-    }
-    console.log(title);
+    $target.parent().eq(0).siblings('input').value = '';
+    console.log('取消')
   }
-
 
   newFolderTitleChange(e) {
     let stateCopy = JSON.parse(JSON.stringify(this.state));
     stateCopy.newFolder.title = e.target.value;
     this.setState(stateCopy);
-  }
-
-  cancelCreateFolder(e) {
-    let $target = $(e.target);
-    $target.parent().eq(0).siblings('input').value = '';
-    console.log('取消')
   }
 
 
@@ -90,7 +73,7 @@ export default class UserDialog extends React.Component {
         <ContentDialog todoFolderInfo={this.state.curSelectTodoFolder} />
         <CreateFolder accountInfo={this.state.accountInfo} newFolder={this.state.newFolder}
         onChange={this.newFolderTitleChange.bind(this)}
-        onSubmit={this.createFolder.bind(this)}
+        onSubmit={this.props.onSubmitNewFolder.bind(this)}
         onCancel={this.cancelCreateFolder.bind(this)}/>
       </div>
     )
