@@ -19,13 +19,13 @@ export default function(props) {
 
           <div className="row">
             <span className="login-icon login-icon-password"></span>
-            <input type="password" value="" placeholder="密码"
+            <input type="password" value={props.formData.password} placeholder="密码"
             onChange={props.onChange.bind(null, 'password')} />
           </div>
 
           <div className="row">
             <span className="login-icon login-icon-email"></span>
-            <input type="email" value="" placeholder="邮箱"
+            <input type="email" value={props.formData.email} placeholder="邮箱"
                    onChange={props.onChange.bind(null, 'email')} />
           </div>
           <div className="row actions">

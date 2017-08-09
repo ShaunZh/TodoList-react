@@ -13,6 +13,7 @@ import './CreateFolder.css';
 function keySubmit(props, e) {
   if (e.key === 'Enter') {
     if (e.target.value.trim() !== '') {
+      console.log('WTF');
       props.onSubmit(e);
     }
   }
@@ -20,12 +21,10 @@ function keySubmit(props, e) {
 
 
 export default function(props) {
-
     return (
       <div className="createFolder">
-        <form>
           <h3>创建新清单</h3>
-          <input type="text" value={props.newFolder.title} placeholder="清单名称"
+          <input type="text" value={props.newFolderTitle} placeholder="清单名称"
                  onChange={props.onChange}
                  onKeyPress={keySubmit.bind(null, props)}
           />
@@ -40,7 +39,6 @@ export default function(props) {
             <button className="cancel-btn" onClick={props.onCancel}>取消</button>
             <button className="confirm-btn" onClick={props.onSubmit}>保存</button>
           </div>
-        </form>
       </div>
     );
 }

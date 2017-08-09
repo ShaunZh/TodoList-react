@@ -17,8 +17,6 @@ export default class UserDialog extends React.Component {
     super(props);
     this.state = {
       curSelectTodoFolder: {},
-      newFolder: {},
-      newList: {}
 
     };
   }
@@ -37,12 +35,6 @@ export default class UserDialog extends React.Component {
     console.log('取消')
   }
 
-  newFolderTitleChange(e) {
-    let stateCopy = JSON.parse(JSON.stringify(this.state));
-    stateCopy.newFolder.title = e.target.value;
-    this.setState(stateCopy);
-  }
-
 
   render() {
     console.log('todoInfo');
@@ -53,10 +45,13 @@ export default class UserDialog extends React.Component {
         <ContentDialog todoFolderInfo={this.props.todoInfo[this.props.curFolder]}
                        newTodoTitle={this.props.newTodoTitle}
                        onSubmitAddTodoList={this.props.onSubmitAddTodoList.bind(this)}
-                       onChangeNewTodo={this.props.onChangeNewTodo.bind(this)}/>
+                       onChangeNewTodo={this.props.onChangeNewTodo.bind(this)}
+                       onLoadIsDisFinishedTodoList={this.props.onLoadIsDisFinishedTodoList.bind(this)}
+                       onClickFinished={this.props.onClickFinished.bind(this)}
+        />
 
-        <CreateFolder accountInfo={this.props.appState.accountInfo} newFolder={this.state.newFolder}
-        onChange={this.newFolderTitleChange.bind(this)}
+        <CreateFolder accountInfo={this.props.appState.accountInfo} newFolderTitle={this.props.newFolderTitle}
+        onChange={this.props.onChangeNewFolder.bind(this)}
         onSubmit={this.props.onSubmitNewFolder.bind(this)}
         onCancel={this.cancelCreateFolder.bind(this)}/>
       </div>

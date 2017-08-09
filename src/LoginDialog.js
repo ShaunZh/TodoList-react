@@ -11,6 +11,8 @@ import SignInDialog from './SignInDialog';
 import SignUpDialog from './SignUpDialog';
 import ForgotPassword from './ForgotPassword';
 
+import { signUp, signIn, sendPasswordResetEmail} from './leanCloud';
+
 
 export default class LoginDialog extends React.Component {
   constructor(props) {
@@ -27,8 +29,6 @@ export default class LoginDialog extends React.Component {
 
 
   changeFormData(key, e) {
-    console.log(e);
-    console.log('key: ' + key + ', value: ' + e.target.value);
     let stateCopy = JSON.parse(JSON.stringify(this.state));
     stateCopy.formData[key] = e.target.value;
     this.setState(stateCopy);
@@ -43,23 +43,55 @@ export default class LoginDialog extends React.Component {
 
   // --------登录窗口----------
   signInOnSubmit(e) {
-    console.log('submit');
-    if (this.state.formData.username !== undefined &&
-        this.state.formData.password !== undefined) {
-      alert('我要登录了');
+
+    e.preventDefault();
+    let {username, password} = this.state.formData;
+    if (username !== undefined &&
+        password !== undefined) {
+      let success = (user) => {
+        this.props.onSignIn.call(null, user);
+      };
+
+      let error = (error) => {
+        switch(error.code) {
+          case 210: {
+            alert('用户名与密码不匹配');
+          }
+          break;
+        }
+      };
+
+      signIn(username, password, success, error);
+
     } else {
-      alert("输入的登录信息有错误呀！");
+      alert('请输入正确的用户名和密码');
+      return ;
     }
+
   };
 
   // --------注册窗口----------
 
   signUpOnSubmit(e) {
-    console.log('submit');
-    if (this.state.formData.username !== undefined &&
-      this.state.formData.password !== undefined &&
-      this.state.formData.email !== undefined) {
-      alert('我要注册了');
+    e.preventDefault();
+    let {username, password, email} = this.state.formData;
+
+    if (username !== undefined &&
+        password !== undefined &&
+        email !== undefined) {
+      let success = (user) => {
+        this.props.onSignUp.call(null, user);
+      };
+
+      let error = (error) => {
+        switch(error.code) {
+          case 202: {
+            alert('用户名被占用了');
+          }
+           break;
+        }
+      };
+      signUp(email, username, password, success, error);
     } else {
       alert("输入的注册信息有误！");
     }

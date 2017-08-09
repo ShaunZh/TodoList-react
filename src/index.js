@@ -13,14 +13,14 @@ registerServiceWorker();
 
 
 function activeTodoFolderItem() {
-  let todoFolders = $('.leftAsideWrap').find('.todoFolderItem');
-  $.each(todoFolders, function(index, item) {
-    let _this = $(this);
-    console.log(_this)
-    _this.on('click', () => {
-      todoFolders.removeClass('active');
-      _this.addClass('active');
+  let todoFolders = $('.leftAsideWrap').find('.todoFolderItemWrap');
+  todoFolders.on('click', (e) => {
+    let $target = $(e.target);
+    let $folder = $target.hasClass('todoFolderItem') ? $target : $target.parent().eq(0);
+    $.each(todoFolders.find('.todoFolderItem'), (index, item) => {
+      $(item).removeClass('active');
     });
+    $folder.addClass('active');
   });
 }
 
@@ -34,7 +34,6 @@ function activeCreateFolder() {
     $createFolderDialog.animate({
       top: "25%",
     }, 100, () => {
-      console.log('出来了');
     })
   })
 }
@@ -57,15 +56,29 @@ function cancelCreateFolder() {
 
 function saveNewFolder() {
   let $saveBtn = $('.createFolder .confirm-btn').eq(0);
+  let $input = $('.createFolder input').eq(0);
+  $input.on('keydown', (e) => {
+    if (e.key === 'Enter') {
+      closeCreateFolderDialog();
+    }
+  });
   $saveBtn.on('click', (e) => {
-    console.log('hahah');
-    e.preventDefault();
     closeCreateFolderDialog();
   });
 }
 
 
+function dispFinishedTodoListToggle() {
+  let $load = $('.contentWrap .loadFinishedTodos').eq(0);
+  let $finishedTodo = $('.finishedTodoItemsWrap').eq(0);
+  $load.on('click', () => {
+    let disp = ($finishedTodo.css('display') === 'none') ? 'block' : 'none';
+    $finishedTodo.css('display', disp);
+  });
+}
+
 activeTodoFolderItem();
 activeCreateFolder();
 cancelCreateFolder();
 saveNewFolder();
+dispFinishedTodoListToggle();

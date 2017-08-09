@@ -10,7 +10,7 @@ import React from 'react'
 export default function (props) {
   return (
     <div className="loginWrap">
-      <form className="signIn" onSubmit={props.onSubmit}>
+      <form className="signIn" onSubmit={props.submit}>
         <div className="row">
           <span className="login-icon login-icon-username"></span>
           <input type="text" value={props.formData.username} className="username" placeholder="用户名"
