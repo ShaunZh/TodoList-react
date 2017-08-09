@@ -49,7 +49,7 @@ export default class LoginDialog extends React.Component {
     if (username !== undefined &&
         password !== undefined) {
       let success = (user) => {
-        this.props.onSignIn.call(null, user);
+        this.props.onSignIn.call(null, 'signIn', user);
       };
 
       let error = (error) => {
@@ -80,7 +80,7 @@ export default class LoginDialog extends React.Component {
         password !== undefined &&
         email !== undefined) {
       let success = (user) => {
-        this.props.onSignUp.call(null, user);
+        this.props.onSignUp.call(null, 'signUp', user);
       };
 
       let error = (error) => {

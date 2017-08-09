@@ -16,11 +16,12 @@ export default function (props) {
       default: return 'todo-folder-icon-default';
     }
   })();
+
   return (
     <div className="todoFolderItem" onClick={props.onClick}>
       <span className={"todo-folder-icon " + folderIcon}></span>
       <span className="todoFolderName">{props.todoFolderInfo.folderName}</span>
-      <span className="todoSum">{props.todoFolderInfo.unfinishedTodos.length}</span>
+      <span className="todoSum">{props.todoFolderInfo.todos.length}</span>
       <span className="todo-folder-icon" onClick=''></span>
     </div>
   )

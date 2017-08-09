@@ -39,15 +39,20 @@ export default class LeftAsideDialog extends Component {
   };
 
 
+  onAddFolder(e) {
+    console.log(this);
+    this.props.onActiveAddFolder(true);
+  }
+
   render() {
 
     let todoFolders = this.props.todoInfo.map((item, index) => {
+      console.log('todoFolders');
       return (
         <TodoFolder key={index.toString()} todoFolderInfo={item} onClick={this.props.onClickCurFolder}
           />
       );
     });
-
 
     return (
       <div className="leftAsideWrap">
@@ -55,12 +60,12 @@ export default class LeftAsideDialog extends Component {
                    searchTodo={this.searchTodo.bind(this)}
         />
 
-        <Account accountInfo={this.state.accountInfo}/>
+        <Account user={this.props.user}/>
         <div className="todoFolderItemWrap">
           {todoFolders}
         </div>
 
-        <div className="createFolderAction" onClick={this.props.createFolder}>
+        <div className="createFolderAction" onClick={this.onAddFolder.bind(this)}>
           <sapn className="todo-folder-icon todo-folder-icon-add"></sapn>
           <span className="todoFolderName">创建清单</span>
         </div>

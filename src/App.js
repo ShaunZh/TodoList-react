@@ -13,6 +13,8 @@ import moment from 'moment';
 import LoginDialog from './LoginDialog';
 import UserDialog from './UserDialog';
 
+import {TodoModel} from './leanCloud';
+
 
 
 class App extends Component {
@@ -20,50 +22,55 @@ class App extends Component {
     super(props);
     this.state = {
       currentFolderIndex: 0,
+      isActiveAddFolderDialog: false,
       currentTab: 'userDialog', // 或 loginDialog
       user: {},
       accountInfo: {
-        username: '',
-        email: '308826842@.com'
+        // username: '张111',
+        // id: '1111',
+        // email: '308826842@.com'
       },
       dispAllFinieshedTodoList: false,
       todoInfo: [
-        {
-          // 清单名称
-          folderName: '我的一天',
-          // 未完成的todos
-          unfinishedTodos: [
-            // {todoName: '第一个任务', createTime: '2017/8/6', isFlag: false},
-          ],
-          // 已完成的todos
-          finishedTodos: [
-            // {todoName: '第一个任务', username: 'hexon', finishedTime: '2017/8/7', createTime: '2017/8/6', isFlag: false},
-          ],
-          isDispFinishedTodos: false
-
-        },
-        {
-          // 清单名称
-          folderName: '已加标记',
-          // 未完成的todos
-          unfinishedTodos: [
-          ],
-          // 已完成的todos
-          finishedTodos: [
-          ],
-          isDispFinishedTodos: false
-        },
-        {
-          // 清单名称
-          folderName: 'Todo',
-          // 未完成的todos
-          unfinishedTodos: [
-          ],
-          // 已完成的todos
-          finishedTodos: [
-          ],
-          isDispFinishedTodos: false
-        }
+        // {
+        //   // 清单名称
+        //   folderName: '我的一天',
+        //   todos: [],
+        //   // 未完成的todos
+        //   // unfinishedTodos: [
+        //   //   // {todoName: '第一个任务', createTime: '2017/8/6', isFlag: false},
+        //   // ],
+        //   // // 已完成的todos
+        //   // finishedTodos: [
+        //   //   // {todoName: '第一个任务', username: 'hexon', finishedTime: '2017/8/7', createTime: '2017/8/6', isFlag: false},
+        //   // ],
+        //   isDispFinishedTodos: false
+        //
+        // },
+        // {
+        //   // 清单名称
+        //   folderName: '已加标记',
+        //   todos: [],
+        //   // // 未完成的todos
+        //   // unfinishedTodos: [
+        //   // ],
+        //   // // 已完成的todos
+        //   // finishedTodos: [
+        //   // ],
+        //   isDispFinishedTodos: false
+        // },
+        // {
+        //   // 清单名称
+        //   folderName: 'Todo',
+        //   todos: [],
+        //   // // 未完成的todos
+        //   // unfinishedTodos: [
+        //   // ],
+        //   // // 已完成的todos
+        //   // finishedTodos: [
+        //   // ],
+        //   isDispFinishedTodos: false
+        // }
       ],
       newFolder: {},
       newTodo : {
@@ -87,47 +94,42 @@ class App extends Component {
     console.log(e.target.value);
   }
 
+
   // 创建清单
-  onSubmitNewFolder(e) {
-    let $target = $(e.target);
-    let title = '';
-    if ($target.get(0).tagName.toLowerCase() === 'input') {
-      title = $target.val();
-    } else if ($target.get(0).tagName.toLowerCase() === 'button') {
-      title = $target.parent().eq(0).siblings('input').eq(0).val();
-    }
-    if (title !== '') {
+  onSubmitAddFolder(folder) {
       let newFolder = {
+        id: folder.id,
         // 清单名称
-        folderName: title,
-          // 未完成的todos
-        unfinishedTodos: [
+        folderName: folder.folderName,
+        // todos
+        todos: [
         ],
-        // 已完成的todos
-         finishedTodos: [
-        ],
-        isDispFinishedTodos: false
       };
 
+      console.log('创建清单成功');
       let stateCopy = JSON.parse(JSON.stringify(this.state));
       stateCopy.todoInfo.push(newFolder);
       stateCopy.newFolder.title = '';
       this.setState(stateCopy);
-    }
   }
 
   // 创建todolist
   onSubmitAddTodoList(e) {
-    let date = moment().format('YYYY/MM/DD');
     let todoList = {
       todoName: e.target.value,
-      createTime: date,
+      isFinished: false,
       isFlag: false
     };
     let stateCopy = JSON.parse(JSON.stringify(this.state));
-    stateCopy.todoInfo[stateCopy.currentFolderIndex].unfinishedTodos.unshift(todoList);
-    stateCopy.newTodo.title = '';
-    this.setState(stateCopy);
+
+    TodoModel.addTodo(stateCopy.todoInfo[stateCopy.currentFolderIndex].id, todoList, (id) => {
+      todoList[id] = id;
+      stateCopy.todoInfo[stateCopy.currentFolderIndex].unshift(todoList);
+      stateCopy.newTodo.title = '';
+      this.setState(stateCopy);
+      console.log('todoList');
+      console.log(todoList);
+    });
   }
 
   // 点击清单回调函数
@@ -184,45 +186,75 @@ class App extends Component {
 
   reloadTodoInfo(user) {
 
+    if (user) {
+      TodoModel.getByUser(user, (todos) => {
+        let stateCopy = JSON.parse(JSON.stringify(this.state));
+        stateCopy.todoInfo = todos;
+        stateCopy.accountInfo = user;
+        this.setState(stateCopy);
+
+        console.log('todos');
+        console.log(todos);
+
+      });
+    }
   }
 
-  onSignInOrSignUp(user) {
-    let stateCopy = JSON.parse(JSON.stringify(this.state));
-    stateCopy.user = user;
-    // 加载用户的todo数据
-    this.reloadTodoInfo(user);
-    console.log('登录成功');
-
-    this.setState(stateCopy);
+  initNewUserFolders() {
 
   }
 
+
+  onSignInOrSignUp(type, user) {
+    if (type === 'signUp') {
+      TodoModel.init( (folders) => {
+        console.log('folders');
+        console.log(folders);
+        this.state.todoInfo = folders;
+
+        let stateCopy = JSON.parse(JSON.stringify(this.state));
+        // 获取到了用户 user 账号信息
+        stateCopy.accountInfo= user;
+        this.setState(stateCopy);
+
+      }, (error) => {
+        console.log('error');
+        console.log(error);
+      })
+    } else if (type === 'signIn') {
+      this.reloadTodoInfo(user);
+      console.log('登录成功');
+    }
+  }
 
 
   render() {
     console.log('更新');
+    console.log(this.state.accountInfo.id);
     return (
       <div className="container">
-        {this.state.user.id
+        {this.state.accountInfo.id
           ?
-          <UserDialog appState={this.state} curFolder={this.state.currentFolderIndex} todoInfo={this.state.todoInfo}
+          <UserDialog user={this.state.accountInfo}
+                      todoInfo={this.state.todoInfo}
+                      onClickFolder={this.curClickFolder.bind(this)}
+
+                      curFolder={this.state.currentFolderIndex}
                       newTodoTitle={this.state.newTodo.title}
                       newFolderTitle={this.state.newFolder.title}
-                      onSubmitNewFolder={this.onSubmitNewFolder.bind(this)}
+                      onSubmitAddFolder={this.onSubmitAddFolder.bind(this)}
                       onSubmitAddTodoList={this.onSubmitAddTodoList.bind(this)}
-                      onClickFolder={this.curClickFolder.bind(this)}
                       onChangeNewTodo={this.onChangeNewTodo.bind(this)}
                       onChangeNewFolder={this.onChangeNewFolder.bind(this)}
                       onLoadIsDisFinishedTodoList={this.onLoadIsDisFinishedTodoList.bind(this)}
                       onClickFinished={this.onClickFinished.bind(this)}
-          />
+         />
           :
           <LoginDialog onSignIn={this.onSignInOrSignUp.bind(this)}
                        onSignUp={this.onSignInOrSignUp.bind(this)}
           />
-
-
         }
+
       </div>
     );
   }

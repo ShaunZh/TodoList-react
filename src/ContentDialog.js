@@ -54,34 +54,48 @@ export default class ContentDialog extends Component {
 
 
   render() {
-    console.log('content');
-    let unfinishedTodos = this.props.todoFolderInfo.unfinishedTodos.map((item, index) => {
-      return (
-        <li key={index.toString()} className="todoItem">
-          <span className="todo-list-icon todo-list-icon-select" onClick={this.onClickFinished.bind(this, 'unfinishedTodos')}></span>
-          <span className="todoName">{item.todoName}</span>
-          <span className="todoTime">{item.createTime}</span>
-          <span className={"todo-list-icon todo-list-icon-flag-"+item.isFlag}></span>
-        </li>
-      )
-    });
+    // let todos = this.props.todoFolderInfo.todos.map((item, index) => {
+    //   return (
+    //     <li key={index.toString()} className="todoItem">
+    //       <span className="todo-list-icon todo-list-icon-select" onClick={this.onClickFinished.bind(this, 'unfinishedTodos')}></span>
+    //       <span className="todoName">{item.title}</span>
+    //       <span className="todoTime">{item.createTime}</span>
+    //       <span className={"todo-list-icon todo-list-icon-flag-"+item.isFlag}></span>
+    //     </li>
+    //   )
+    // });
 
-    let finishedTodos = this.props.todoFolderInfo.finishedTodos.map((item, index) => {
-      return (
-        <li key={index.toString()} className="todoItem">
-          <span className="todo-list-icon todo-list-icon-selected" onClick={this.onClickFinished.bind(this, 'finishedTodos')}></span>
-          <div className="finishedInfoWrap">
-            <div className="todoName">{item.todoName}</div>
-            <div className="finishedInfo">
-              <span className="finishedTime">{this.getBeforeTime(item.finishedTime)}</span>
-              <span className="username">{'由 ' + item.username +' 完成 '}</span>
-            </div>
-          </div>
-          <span className="createTime">{item.createTime}</span>
-          <span className={"todo-list-icon todo-list-icon-flag-"+item.isFlag}></span>
-        </li>
-      );
-    });
+    let unfinishedTodos = this.props.todoFolderInfo.todos
+                          .filter( (item) => {return (item.isFinished === false);})
+                          .map( (item, index) => {
+                            return (
+                              <li key={index.toString()} className="todoItem">
+                                <span className="todo-list-icon todo-list-icon-select" onClick={this.onClickFinished.bind(this, 'unfinishedTodos')}></span>
+                                <span className="todoName">{item.todoName}</span>
+                                <span className="todoTime">{}</span>
+                                <span className={"todo-list-icon todo-list-icon-flag-"+item.isFlag}></span>
+                              </li>
+                            );
+                          });
+
+    let finishedTodos = this.props.todoFolderInfo.todos
+                          .filter( (item) => {return (item.isFinished === true); })
+                          .map((item, index) => {
+                            return (
+                              <li key={index.toString()} className="todoItem">
+                                <span className="todo-list-icon todo-list-icon-selected" onClick={this.onClickFinished.bind(this, 'finishedTodos')}></span>
+                                <div className="finishedInfoWrap">
+                                  <div className="todoName">{item.todoName}</div>
+                                  <div className="finishedInfo">
+                                    <span className="finishedTime">{}</span>
+                                    <span className="username">{'由 ' + this.props.user.username +' 完成 '}</span>
+                                  </div>
+                                </div>
+                                <span className="createTime">完成时间</span>
+                                <span className={"todo-list-icon todo-list-icon-flag-"+item.isFlag}></span>
+                              </li>
+                            );
+                          });
 
     return (
       <div className="contentWrap">
@@ -91,7 +105,7 @@ export default class ContentDialog extends Component {
         <AddTodo newTodoTitle={this.props.newTodoTitle}
                  onChange={this.props.onChangeNewTodo.bind(this)}
                  onSubmit={this.props.onSubmitAddTodoList.bind(this)}
-         />
+        />
 
         <ul className="unfinishedTodoItemsWrap">
           {unfinishedTodos}

@@ -31,23 +31,28 @@ export const TodoModel = {
     todosQuery.include('folderObj');
     todosQuery.find().then( (todos) => {
       let arr = [];
+      let obj = {};
+
       todos.forEach((item, index) => {
-        let obj = {};
-        let folder = todos.get('folderObj').get('folderName');
-        console.log(todos.get('folderObj'));
-        obj[folder] = item;
-        arr.push(obj);
+        let folder = item.get('folderObj').get('folderName');
+        if (!(folder in obj)) {
+          obj[folder] = [];
+        }
+        obj[folder].push(item.attributes);
       });
+
       foldersQuery.find().then( (folders) => {
         folders.forEach((folder, index)=> {
-          for (var i = 0; i < arr.length; i++) {
-            if (folder.get('folderName') in arr[i]) {
-              break;
-            }
-          }
-          if (i === arr.length) {
+          if (folder.get('folderName') in obj) {
+            arr.push({
+              id: folder.get('objectId'),
+              folderName: folder.get('folderName'),
+              todos: obj[folder.get('folderName')],
+            });
+          } else {
             arr.push(
               {
+                id: folder.get('objectId'),
                 folderName: folder.get('folderName'),
                 todos: []
               }
@@ -84,11 +89,11 @@ export const TodoModel = {
   },
 
   // folderId 为要添加todo的folder 的 id
-  addTodo(folderId, {title, isFinished, isFlag}, successFn, errorFn) {
+  addTodo(folderId, {todoName, isFinished, isFlag}, successFn, errorFn) {
     let todoFolder = AV.Object.createWithoutData('TodoFolder', folderId);
     let Todo = AV.Object.extend('Todo');
     let todo = new Todo();
-    todo.set('todoName', title);
+    todo.set('todoName', todoName);
     todo.set('isFinished', isFinished);
     todo.set('isFlag', isFlag);
     todo.set('folderObj', todoFolder);

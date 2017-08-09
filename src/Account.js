@@ -8,10 +8,11 @@
 import React from 'react';
 
 export default function(props) {
+  console.log('account');
   return (
     <div className="accountWrap">
-      <span className="firstLetterUserName">{props.accountInfo.username.split('')[0]}</span>
-      <span className="username">{props.accountInfo.username}</span>
+      <span className="firstLetterUserName">{props.user.username.split('')[0]}</span>
+      <span className="username">{props.user.username}</span>
       <span className="user-dialog-icon user-dialog-icon-logout"></span>  {/*onClick=''*/}
     </div>
   );
