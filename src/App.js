@@ -144,42 +144,50 @@ class App extends Component {
     }
   }
 
-  onLoadIsDisFinishedTodoList(e) {
-    let isDisp = this.state.todoInfo[this.state.currentFolderIndex].isDispFinishedTodos;
-    let stateCopy = JSON.parse(JSON.stringify(this.state));
+  onLoadIsDisFinishedTodoList(todoFolder, e) {
+    let isDisp = todoFolder.isDisplayFinishedTodoList;  //this.state.todoInfo[todoFolder.folderName].isDisplayFinishedTodoList;
+    // let stateCopy = JSON.parse(JSON.stringify(this.state));
     isDisp = (isDisp === false) ? true : false;
-    stateCopy.todoInfo[stateCopy.currentFolderIndex].isDispFinishedTodos = isDisp;
-    this.setState(stateCopy);
-    console.log('isDisp');
-    console.log(isDisp);
+    todoFolder.isDisplayFinishedTodoList = isDisp;
+
+   // stateCopy.todoInfo[todoFolder.folderName].isDisplayFinishedTodoList= isDisp;
+    this.setState(this.state);
   }
 
 
-  onClickFinished(todoWrapName, index, e) {
-    console.log(index);
-    console.log(todoWrapName);
-
-    let stateCopy = JSON.parse(JSON.stringify(this.state));
-    let idx = stateCopy.currentFolderIndex;
-    console.log(stateCopy.todoInfo[idx][todoWrapName]);
-    let todoList= stateCopy.todoInfo[idx][todoWrapName].splice(index, 1)[0];
-
-    // console.log(stateCopy.todoInfo[stateCopy.currentFolderIndex][todoWrapName].splice(0, 2));
-    console.log(stateCopy);
-
-    let time = moment().format('YYYY/MM/DD');
-
-    if (todoWrapName === 'unfinishedTodos') {
-      todoList.username = stateCopy.accountInfo.username;
-      todoList.finishedTime = time;
-      stateCopy.todoInfo[stateCopy.currentFolderIndex].finishedTodos.unshift(todoList);
-    } else {
-      delete todoList.finishedTime;
-      todoList.createTime = time;
-      stateCopy.todoInfo[stateCopy.currentFolderIndex].unfinishedTodos.unshift(todoList);
-    }
-    this.setState(stateCopy);
+  onClickFinished(todo, e) {
+    let oldStatus = todo.isFinished;
+    todo.isFinished = todo.isFinished === false ? true : false;
+    TodoModel.update(todo, () => {
+      this.setState(this.state);
+    }, (error) => {
+      todo.isFinished = oldStatus;
+      this.setState(this.state);
+    });
   }
+
+  //   let stateCopy = JSON.parse(JSON.stringify(this.state));
+  //   let idx = stateCopy.currentFolderIndex;
+  //   console.log(stateCopy.todoInfo[idx][todoWrapName]);
+  //   let todoList= stateCopy.todoInfo[idx][todoWrapName].splice(index, 1)[0];
+  //
+  //   console.log('todo');
+  //   console.log(todo);
+  //
+  //
+  //   let time = moment().format('YYYY/MM/DD');
+  //
+  //   if (todoWrapName === 'unfinishedTodos') {
+  //     todoList.username = stateCopy.accountInfo.username;
+  //     todoList.finishedTime = time;
+  //     stateCopy.todoInfo[stateCopy.currentFolderIndex].finishedTodos.unshift(todoList);
+  //   } else {
+  //     delete todoList.finishedTime;
+  //     todoList.createTime = time;
+  //     stateCopy.todoInfo[stateCopy.currentFolderIndex].unfinishedTodos.unshift(todoList);
+  //   }
+  //   this.setState(stateCopy);
+  // }
 
   reloadTodoInfo(user) {
 
@@ -205,22 +213,16 @@ class App extends Component {
   onSignInOrSignUp(type, user) {
     if (type === 'signUp') {
       TodoModel.init( (folders) => {
-        console.log('folders');
-        console.log(folders);
         this.state.todoInfo = folders;
-
         let stateCopy = JSON.parse(JSON.stringify(this.state));
         // 获取到了用户 user 账号信息
         stateCopy.accountInfo= user;
         this.setState(stateCopy);
 
       }, (error) => {
-        console.log('error');
-        console.log(error);
       })
     } else if (type === 'signIn') {
       this.reloadTodoInfo(user);
-      console.log('登录成功');
     }
   }
 

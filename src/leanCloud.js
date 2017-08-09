@@ -35,6 +35,8 @@ export const TodoModel = {
 
       todos.forEach((item, index) => {
         let folder = item.get('folderObj').get('folderName');
+        // 在需要返回的todo中添加id
+        item.attributes.id = item.id;
         if (!(folder in obj)) {
           obj[folder] = [];
         }
@@ -48,13 +50,15 @@ export const TodoModel = {
               id: folder.get('objectId'),
               folderName: folder.get('folderName'),
               todos: obj[folder.get('folderName')],
+              isDisplayFinishedTodoList: false,
             });
           } else {
             arr.push(
               {
                 id: folder.get('objectId'),
                 folderName: folder.get('folderName'),
-                todos: []
+                todos: [],
+                isDisplayFinishedTodoList: false,
               }
             );
           }
@@ -112,7 +116,9 @@ export const TodoModel = {
          folderObj: response.attributes.folderObj,
          isFinished: response.attributes.isFinished,
          isFlag: response.attributes.isFlag,
-       });
+         createTime: response.createdAt,
+         updateTime: response.updatedAt
+      });
 
 
       // successFn.apply(this, {
@@ -139,18 +145,12 @@ export const TodoModel = {
     });
   },
 
-  update({id, title, status, deleted}, successFn, errorFn) {
+  update({id, todoName,  isFinished, isFlag}, successFn, errorFn) {
 
-    console.log('进来了');
-    console.log(id);
-    console.log(title);
-    console.log(status);
-    console.log(deleted);
     let todo = AV.Object.createWithoutData('Todo', id);
-    console.log(id);
-    title !== undefined && todo.set('todoName', title);
-    status !== undefined && todo.set('status', status);
-    deleted !== undefined && todo.set('deleted', deleted);
+    todoName !== undefined && todo.set('todoName', todoName);
+    isFinished !== undefined && todo.set('isFinished', isFinished);
+    isFlag !== undefined && todo.set('isFlag', isFlag);
     todo.save().then((response) => {
       successFn && successFn.call(null);
     }, (error) => errorFn && errorFn.call(null, error))
@@ -185,7 +185,7 @@ export const TodoModel = {
 
     AV.Object.saveAll(folders).then( (response) => {
       let folders = response.map((item) => {
-        return {id: item.id,  todos: [], ...item.attributes};
+        return {id: item.id, isDisplayFinishedTodoList: false, todos: [], ...item.attributes};
       });
       successFn & successFn.call(null, folders);
     }, (error) => {
