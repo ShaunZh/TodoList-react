@@ -89,7 +89,8 @@ export const TodoModel = {
   },
 
   // folderId 为要添加todo的folder 的 id
-  addTodo(folderId, {todoName, isFinished, isFlag}, successFn, errorFn) {
+  addTodo( folderId, {todoName, isFinished, isFlag}, successFn, errorFn) {
+
     let todoFolder = AV.Object.createWithoutData('TodoFolder', folderId);
     let Todo = AV.Object.extend('Todo');
     let todo = new Todo();
@@ -105,8 +106,22 @@ export const TodoModel = {
     todo.setACL(acl);
 
     todo.save().then( (response) => {
-      console.log('add todo ok');
-      successFn.call(null, response.id);
+      successFn.call(this, {
+         id: response.id,
+         todoName: response.attributes.todoName,
+         folderObj: response.attributes.folderObj,
+         isFinished: response.attributes.isFinished,
+         isFlag: response.attributes.isFlag,
+       });
+
+
+      // successFn.apply(this, {
+      //   id: response.id,
+      //   todoName: response.attributes.todoName,
+      //   folderObj: response.attributes.folderObj,
+      //   isFinished: response.attributes.isFinished,
+      //   isFlag: response.attributes.isFlag,
+      // });
     }, (error) => {
       console.log('add todo fail!!!');
       errorFn & errorFn.call(null, error);

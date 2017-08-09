@@ -120,15 +120,12 @@ class App extends Component {
       isFinished: false,
       isFlag: false
     };
-    let stateCopy = JSON.parse(JSON.stringify(this.state));
 
-    TodoModel.addTodo(stateCopy.todoInfo[stateCopy.currentFolderIndex].id, todoList, (id) => {
-      todoList[id] = id;
-      stateCopy.todoInfo[stateCopy.currentFolderIndex].unshift(todoList);
+    TodoModel.addTodo.bind(this)( this.state.todoInfo[this.state.currentFolderIndex].id, todoList, (todo) => {
+      let stateCopy = JSON.parse(JSON.stringify(this.state));
+      stateCopy.todoInfo[stateCopy.currentFolderIndex].todos.unshift(todo);
       stateCopy.newTodo.title = '';
       this.setState(stateCopy);
-      console.log('todoList');
-      console.log(todoList);
     });
   }
 
