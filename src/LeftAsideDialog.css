@@ -46,6 +46,14 @@
     background-color: inherit; }
   .leftAsideWrap .todoFolderItemWrap .todo-folder-icon {
     font-size: 24px; }
+  .leftAsideWrap .todoFolderItemWrap .todo-folder-icon-modify, .leftAsideWrap .todoFolderItemWrap .todoSum {
+    margin-right: 10px;
+    font-size: 14px;
+    color: #999; }
+  .leftAsideWrap .todoFolderItemWrap .todo-folder-icon-modify {
+    display: none; }
+  .leftAsideWrap .todoFolderItemWrap .modify-active {
+    display: block; }
   .leftAsideWrap .todoFolderItemWrap .todoFolderName {
     flex: 1; }
   .leftAsideWrap .todoFolderItemWrap:hover {

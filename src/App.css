@@ -1,8 +1,8 @@
 @font-face {
   font-family: 'iconfont';
   /* project id 374892 */
-  src: url("https://at.alicdn.com/t/font_djsvmeuweofrms4i.eot");
-  src: url("https://at.alicdn.com/t/font_djsvmeuweofrms4i.eot?#iefix") format("embedded-opentype"), url("https://at.alicdn.com/t/font_djsvmeuweofrms4i.woff") format("woff"), url("https://at.alicdn.com/t/font_djsvmeuweofrms4i.ttf") format("truetype"), url("https://at.alicdn.com/t/font_djsvmeuweofrms4i.svg#iconfont") format("svg"); }
+  src: url("https://at.alicdn.com/t/font_374892_0a4ygk4erovl5wmi.eot");
+  src: url("https://at.alicdn.com/t/font_374892_0a4ygk4erovl5wmi.eot?#iefix") format("embedded-opentype"), url("https://at.alicdn.com/t/font_374892_0a4ygk4erovl5wmi.woff") format("woff"), url("https://at.alicdn.com/t/font_374892_0a4ygk4erovl5wmi.ttf") format("truetype"), url("https://at.alicdn.com/t/font_374892_0a4ygk4erovl5wmi.svg#iconfont") format("svg"); }
 .login-icon {
   font-family: iconfont;
   font-size: 20px;
@@ -10,7 +10,7 @@
   margin-left: 10px;
   margin-right: 10px; }
 
-.user-dialog-icon, .todo-folder-icon, .todo-list-icon {
+.user-dialog-icon, .todo-folder-icon, .todo-list-icon, .action-icon {
   font-family: iconfont;
   font-size: 20px;
   margin-left: 10px;
@@ -76,6 +76,11 @@
 
 .todo-list-icon-flag-false:before {
   content: '\e603';
+  color: #999; }
+
+.action-icon-delete:before {
+  content: '\e677';
+  font-size: 16px;
   color: #999; }
 
 html, body {

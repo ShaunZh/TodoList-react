@@ -35,8 +35,10 @@ export const TodoModel = {
 
       todos.forEach((item, index) => {
         let folder = item.get('folderObj').get('folderName');
-        // 在需要返回的todo中添加id
+        // todo的id、createTime和updateTime 并未手动存储于服务器上，而是从服务器上获取，然后输出
         item.attributes.id = item.id;
+        item.attributes.createTime = item.createdAt;
+        item.attributes.updateTime = item.updatedAt;
         if (!(folder in obj)) {
           obj[folder] = [];
         }
@@ -119,15 +121,6 @@ export const TodoModel = {
          createTime: response.createdAt,
          updateTime: response.updatedAt
       });
-
-
-      // successFn.apply(this, {
-      //   id: response.id,
-      //   todoName: response.attributes.todoName,
-      //   folderObj: response.attributes.folderObj,
-      //   isFinished: response.attributes.isFinished,
-      //   isFlag: response.attributes.isFlag,
-      // });
     }, (error) => {
       console.log('add todo fail!!!');
       errorFn & errorFn.call(null, error);
@@ -135,25 +128,25 @@ export const TodoModel = {
   },
 
   // 更新TodoFolder：主要是修改Folder name
-  updateTodoFolder({folderId, title}, successFn, errorFn) {
-    let todoFolder = AV.Object.createWithoutData('TodoFolder', folderId);
-    title !== undefined && todoFolder.set('folderName', title);
+  updateTodoFolder({id, folderName, isDelete}, successFn, errorFn) {
+    let todoFolder = AV.Object.createWithoutData('TodoFolder', id);
+    folderName !== undefined && todoFolder.set('folderName', folderName);
     todoFolder.save().then( (response) => {
-      successFn && successFn.call(null);
+      successFn && successFn.call(null, response);
     }, (error) => {
       errorFn && errorFn.call(null, error);
     });
   },
 
   update({id, todoName,  isFinished, isFlag}, successFn, errorFn) {
-
     let todo = AV.Object.createWithoutData('Todo', id);
     todoName !== undefined && todo.set('todoName', todoName);
     isFinished !== undefined && todo.set('isFinished', isFinished);
     isFlag !== undefined && todo.set('isFlag', isFlag);
+
     todo.save().then((response) => {
-      successFn && successFn.call(null);
-    }, (error) => errorFn && errorFn.call(null, error))
+      successFn && successFn.call(this, response);
+    }, (error) => errorFn && errorFn.call(this, error))
   },
 
   destroy(todoId, successFn, errorFn) {

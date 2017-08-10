@@ -130,18 +130,10 @@ class App extends Component {
   }
 
   // 点击清单回调函数
-  curClickFolder(e) {
-    let $target = $(e.target);
-
-    if ($target.hasClass('todoFolderItem') ||
-      ($target.parent().eq(0).hasClass('todoFolderItem')) && !$target.parent().eq(0).hasClass('todo-folder-icon-modify')) {
-
-      let $folder = $target.hasClass('todoFolderItem') ? $target : $target.parent().eq(0);
-      let key = $folder.parent().eq(0).children().index($folder);
+  curClickFolder(index, e) {
       let stateCopy = JSON.parse(JSON.stringify(this.state));
-      stateCopy.currentFolderIndex = key;
+      stateCopy.currentFolderIndex = index;
       this.setState(stateCopy);
-    }
   }
 
   onLoadIsDisFinishedTodoList(todoFolder, e) {
@@ -158,7 +150,10 @@ class App extends Component {
   onClickFinished(todo, e) {
     let oldStatus = todo.isFinished;
     todo.isFinished = todo.isFinished === false ? true : false;
-    TodoModel.update(todo, () => {
+
+    TodoModel.update.bind(this)(todo, (response) => {
+      console.log(todo.updateTime);
+      todo.updateTime = response.updatedAt;
       this.setState(this.state);
     }, (error) => {
       todo.isFinished = oldStatus;
@@ -226,6 +221,13 @@ class App extends Component {
     }
   }
 
+  onSubmitEditFolder({folderName, isDelete, id}) {
+    let stateCopy = JSON.parse(JSON.stringify(this.state)) ;
+    stateCopy.todoInfo[stateCopy.currentFolderIndex].folderName = folderName;
+    stateCopy.todoInfo[stateCopy.currentFolderIndex].isDelete = isDelete;
+    this.setState(stateCopy);
+  }
+
 
   render() {
     console.log('更新');
@@ -247,6 +249,7 @@ class App extends Component {
                       onChangeNewFolder={this.onChangeNewFolder.bind(this)}
                       onLoadIsDisFinishedTodoList={this.onLoadIsDisFinishedTodoList.bind(this)}
                       onClickFinished={this.onClickFinished.bind(this)}
+                      onSubmitEditFolder={this.onSubmitEditFolder.bind(this)}
          />
           :
           <LoginDialog onSignIn={this.onSignInOrSignUp.bind(this)}

@@ -66,6 +66,20 @@ $todo-folder-active-bk-color: #e0eefa;
     .todo-folder-icon {
       font-size: 24px;
     }
+
+    .todo-folder-icon-modify, .todoSum {
+      margin-right: 10px;
+      font-size: 14px;
+      color: #999;
+
+    }
+    .todo-folder-icon-modify {
+      display: none;
+    }
+
+    .modify-active {
+      display: block;
+    }
     .todoFolderName {
       flex: 1;
     }

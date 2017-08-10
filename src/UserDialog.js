@@ -11,6 +11,7 @@ import LeftAsideDialog from './LeftAsideDialog';
 import $ from 'jquery';
 import ContentDialog from './ContentDialog';
 import CreateFolder from './CreateFolder';
+import EditDialog from './EditDialog';
 
 import {TodoModel} from './leanCloud';
 
@@ -29,9 +30,6 @@ function dispAddFolderDialog(){
   let $addFolderDialog = $('.createFolder').eq(0);
   let $fade = $('.fade').eq(0);
   dispToggle($addFolderDialog);
-
-  console.log('打印');
-  console.log($addFolderDialog);
 
   $fade.addClass('fade-active');
   $addFolderDialog.animate({
@@ -52,6 +50,29 @@ function hideAddFolderDialog() {
 
 
 
+// 显示 editFolderDialog
+function dispEditFolderDialog() {
+  let $editDialog = $('.editDialog').eq(0);
+  let $fade = $('.fade').eq(0);
+  dispToggle($editDialog);
+
+  $fade.addClass('fade-active');
+  $editDialog.animate({
+    top: "25%",
+  }, 100, () => {
+  });
+}
+
+// 隐藏 dispEditFolderDialog
+function hideEditFolderDialog() {
+  let $editDialog= $('.editDialog').eq(0);
+  let $fade = $('.fade').eq(0);
+
+  $fade.removeClass('fade-active');
+  dispToggle($editDialog);
+}
+
+
 export default class UserDialog extends React.Component {
   constructor(props) {
     super(props);
@@ -69,8 +90,19 @@ export default class UserDialog extends React.Component {
     console.log('hhhh');
   }
 
-  onActiveAddFolder(isActive) {
+
+  onActiveAddFolder() {
     dispAddFolderDialog();
+  }
+
+  onActiveEditFolder() {
+    dispEditFolderDialog();
+  }
+
+  onChangeEditFolder(e) {
+    let stateCopy = JSON.parse(JSON.stringify(this.state));
+    stateCopy.newFolder.title = e.target.value;
+    this.setState(stateCopy);
   }
 
   onChangeAddFolder(e) {
@@ -86,6 +118,26 @@ export default class UserDialog extends React.Component {
     hideAddFolderDialog();
   }
 
+  onCloseEditFolderDialog(e) {
+    hideEditFolderDialog();
+  }
+
+  onSubmitEditFolder(folderInfo, e) {
+    let title = folderInfo.title;
+    let folder = {
+      id: this.props.todoInfo[this.props.curFolder].id,
+      folderName: folderInfo.folderName,
+      isDelete: folderInfo.isDelete
+    };
+
+    TodoModel.updateTodoFolder(folder, (response) => {
+      this.props.onSubmitEditFolder(folder);
+    }, (error) => {
+    });
+    this.onCloseEditFolderDialog();
+  }
+
+
   onSubmitAddFolder(e) {
     let title = this.state.newFolder.title;
     TodoModel.createFolder(title, (id) => {
@@ -95,7 +147,6 @@ export default class UserDialog extends React.Component {
       };
       this.props.onSubmitAddFolder(folder);
     });
-    console.log('创建成功');
     this.onCloseAddFolderDialog();
   }
 
@@ -109,6 +160,7 @@ export default class UserDialog extends React.Component {
                          todoInfo={this.props.todoInfo}
                          onClickCurFolder={this.props.onClickFolder.bind(this)}
                          onActiveAddFolder={this.onActiveAddFolder.bind(this)}
+                         onActiveEditFolder={this.onActiveEditFolder.bind(this)}
         />
 
         <ContentDialog
@@ -120,19 +172,26 @@ export default class UserDialog extends React.Component {
           onLoadIsDisFinishedTodoList={this.props.onLoadIsDisFinishedTodoList.bind(this)}
           onClickFinished={this.props.onClickFinished.bind(this)}
         />
+
          <CreateFolder user={this.props.user}
                        newFolder={this.state.newFolder}
                        onChange={this.onChangeAddFolder.bind(this)}
                        onSubmit={this.onSubmitAddFolder.bind(this)}
                        onCancel={this.onCloseAddFolderDialog.bind(this)}
-
         />
+
+
+        <EditDialog user={this.props.user}
+                    editFolder={this.props.todoInfo[this.props.curFolder]}
+                    onSubmit={this.onSubmitEditFolder.bind(this)}
+                    onCancel={this.onCloseEditFolderDialog.bind(this)}
+        />
+
+
       </div>
     )
   }
 }
-
-
 
 
 // {/*onActiveAddFolder={this.onActiveAddFolder}*/}

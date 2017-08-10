@@ -12,8 +12,8 @@ export default function(props) {
     <div className="topSearchWrap">
       <form>
       <span className="user-dialog-icon user-dialog-icon-category"></span>
-      <input type="text" className="search" value={props.searchStr}
-        onChange={props.searchTodo.bind(null, 'search')}/>
+      <input type="text" className="search" value=''
+        onChange=''/>
 
       <span className="user-dialog-icon user-dialog-icon-search" ></span>  {/*onClick=''*/}
       </form>

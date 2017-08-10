@@ -73,7 +73,7 @@ export default class ContentDialog extends Component {
                               <li key={index.toString()} className="todoItem">
                                 <span className="todo-list-icon todo-list-icon-select" onClick={this.onClickFinished.bind(this, item)}></span>
                                 <span className="todoName">{item.todoName}</span>
-                                <span className="todoTime">{moment(item.updateTime).format('YYYY/MM/DD HH:MM:SS')}</span>
+                                <span className="todoTime">{moment(item.updateTime).format('YYYY/MM/DD HH:mm')}</span>
                                 <span className={"todo-list-icon todo-list-icon-flag-"+item.isFlag}></span>
                               </li>
                             );
@@ -92,7 +92,7 @@ export default class ContentDialog extends Component {
                                     <span className="username">{'由 ' + this.props.user.username +' 完成 '}</span>
                                   </div>
                                 </div>
-                                <span className="createTime">{moment(item.updateTime).format('YYYY/MM/DD HH:MM:SS')}</span>
+                                <span className="createTime">{moment(item.updateTime).format('YYYY/MM/DD HH:mm')}</span>
                                 <span className={"todo-list-icon todo-list-icon-flag-"+item.isFlag}></span>
                               </li>
                             );

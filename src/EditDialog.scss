@@ -1,0 +1,67 @@
+@charset "utf-8";
+
+@import "todoStyle-variables";
+@import "PublicStyle";
+
+.editDialog{
+  display: none;
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: 1000;
+  background-color: #fff;
+
+  border: 1px solid #bbb;
+  width: 390px;
+  height: 220px;
+  box-shadow: 0 0 4px #bbb;
+  h3 {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  input {
+    width: 364px;
+    margin: 10px;
+    padding: 10px 10px;
+    border: 1px solid #bbb;
+  }
+  .accountInfoWrap {
+    display: flex;
+    align-items: center;;
+
+    height: 56px;
+    padding: 0 10px;
+    border-bottom: 1px solid #bbb;
+    font-size: $font-size-small;
+    background-color: #FAFAFA;
+
+    .username {
+      font-weight: bolder;
+    }
+    .email {
+      color: #999;
+    }
+    .firstLetterUserName {
+      @extend %firstName;
+    }
+  }
+
+  .btn-group {
+    margin-top: 10px;
+    float: right;
+
+    button {
+      margin-right: 15px;
+
+    }
+    .cancel-btn {
+      @extend %cancel-btn;
+    }
+
+    .confirm-btn {
+      @extend  %confirm-btn
+    }
+  }
+}
