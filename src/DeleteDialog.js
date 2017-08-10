@@ -11,12 +11,20 @@ import React from 'react';
 export default function(props) {
   return (
     <div className="deleteDialog">
-      <h3>{props.title}</h3>
-      <div className="actions">
-        <div className="btn-group">
-          <button className="cancel-btn" onClick={props.onCancel.bind(this)}>取消</button>
-          <button className="confirm-btn" onClick={props.onConfirm.bind(this)}>删除</button>
+      <div className="main">
+        <div className="left">
+          我是一个图标
         </div>
+        <div className="right">
+          <h3>[ {props.title} ] 将被永久删除</h3>
+          <p className="desp">你将无法撤销此操作。 </p>
+        </div>
+      </div>
+      <div className="row actions">
+          <div className="btn-group">
+            <button className="confirm-btn" onClick={props.onConfirm.bind(this)}>删除</button>
+            <button className="cancel-btn" onClick={props.onCancel.bind(this)}>取消</button>
+          </div>
       </div>
     </div>
   );

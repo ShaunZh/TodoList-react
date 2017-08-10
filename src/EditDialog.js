@@ -51,8 +51,9 @@ export default class EditDialog extends Component{
 
   // 弹出删除对话框
   onDelete(e) {
+    console.log('hhhh');
     let $editDialog = $('.editDialog').eq(0);
-    let $deleteDialog = $editDialog.find('.deleteDialog').eq(0);
+    let $deleteDialog = $('.editDialogWrap').find('.deleteDialog').eq(0);
     $editDialog.css({'display': 'none'});
     $deleteDialog.css({'display':'block'});
     $deleteDialog.animate({
@@ -66,9 +67,9 @@ export default class EditDialog extends Component{
 
   // 删除对话框中的取消键回调函数
   onCancelDelete(e) {
-    let $deleteDialog = $('editDialog').find('.deleteDialog').eq(0);
+    let $deleteDialog = $('.editDialogWrap').find('.deleteDialog').eq(0);
     let $fade = $('.fade').eq(0);
-    $fade.removeClass('.active');
+    $fade.removeClass('fade-active');
     $deleteDialog.css({
       'display': 'none'
     });
@@ -78,7 +79,7 @@ export default class EditDialog extends Component{
 
   // 删除对话框中的确认键回调函数
   onConfirmDelete(e) {
-    let $deleteDialog = $('editDialog').find('.deleteDialog').eq(0);
+    let $deleteDialog = $('.editDialogWrap').find('.deleteDialog').eq(0);
     let stateCopy = JSON.parse(JSON.stringify(this.state));
     $deleteDialog.css({'display': 'none'});
     stateCopy.folderInfo.isDelete = true;
@@ -98,26 +99,27 @@ export default class EditDialog extends Component{
 
   render() {
     return (
-      <div className="editDialog">
-        <h3>编辑清单</h3>
-        <input type="text" value={this.state.folderInfo.folderName} placeholder="清单名称"
-               onChange={this.onChange.bind(this)}
-               onKeyPress={this.keySubmit.bind(this)}
-        />
-        <div className="accountInfoWrap">
-          <span className="firstLetterUserName">{this.props.user.username.split('')[0]}</span>
-          <div className="accountInfo">
-            <p className="username">{this.props.user.username}</p>
-            <p className="email">{this.props.user.email}</p>
+      <div className="editDialogWrap">
+        <div className="editDialog">
+          <h3>编辑清单</h3>
+          <input type="text" value={this.state.folderInfo.folderName} placeholder="清单名称"
+                 onChange={this.onChange.bind(this)}
+                 onKeyPress={this.keySubmit.bind(this)}
+          />
+          <div className="accountInfoWrap">
+            <span className="firstLetterUserName">{this.props.user.username.split('')[0]}</span>
+            <div className="accountInfo">
+              <p className="username">{this.props.user.username}</p>
+              <p className="email">{this.props.user.email}</p>
+            </div>
+          </div>
+
+          <div className="actions btn-group operation">
+            <span className="action-icon action-icon-delete" onClick={this.onDelete.bind(this)}></span>
+            <button className="cancel-btn" onClick={this.onCancel.bind(this)}>取消</button>
+            <button className="confirm-btn" onClick={this.onSubmit.bind(this)}>保存</button>
           </div>
         </div>
-
-        <div className="actions btn-group operation">
-          <span className="action-icon action-icon-delete" onClick={this.onDelete.bind(this)}></span>
-          <button className="cancel-btn" onClick={this.onCancel.bind(this)}>取消</button>
-          <button className="confirm-btn" onClick={this.onSubmit.bind(this)}>保存</button>
-        </div>
-
         <DeleteDialog title={this.state.folderInfo.folderName}
                       onCancel={this.onCancelDelete.bind(this)}
                       onConfirm={this.onConfirmDelete.bind(this)}

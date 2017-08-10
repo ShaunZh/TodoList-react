@@ -109,13 +109,15 @@ export default class ContentDialog extends Component {
         />
 
         <ul className="unfinishedTodoItemsWrap">
+          {/*{this.props.todoFolderInfo.isDelete ? null : unfinishedTodos}*/}
           {unfinishedTodos}
         </ul>
         <div className="loadFinishedTodos">
           <button onClick={this.props.onLoadIsDisFinishedTodoList.bind(null, this.props.todoFolderInfo)}>显示已完成任务</button>
         </div>
         <ul className="finishedTodoItemsWrap">
-          {this.props.todoFolderInfo.isDisplayFinishedTodoList === false ? null : finishedTodos}
+          {/*{(this.props.todoFolderInfo.isDisplayFinishedTodoList || this.props.todoFolderInfo.isDelete )? null : finishedTodos}*/}
+          {this.props.todoFolderInfo.isDisplayFinishedTodoList ? null : finishedTodos}
         </ul>
       </div>
     )

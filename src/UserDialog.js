@@ -16,21 +16,13 @@ import EditDialog from './EditDialog';
 import {TodoModel} from './leanCloud';
 
 
-// 显示反转
-function dispToggle($ele) {
-  if ($ele.css('display') === 'none') {
-    $ele.css({'display': 'block'});
-  } else {
-    $ele.css({'display': 'none'});
-  }
-}
 
 // 显示 addFolderDialog
 function dispAddFolderDialog(){
   let $addFolderDialog = $('.createFolder').eq(0);
   let $fade = $('.fade').eq(0);
-  dispToggle($addFolderDialog);
 
+  $addFolderDialog.css({'display': 'block'});
   $fade.addClass('fade-active');
   $addFolderDialog.animate({
     top: "25%",
@@ -45,7 +37,8 @@ function hideAddFolderDialog() {
   let $fade = $('.fade').eq(0);
 
   $fade.removeClass('fade-active');
-  dispToggle($addFolderDialog);
+  $addFolderDialog.css({'display': 'none'});
+
 }
 
 
@@ -54,8 +47,8 @@ function hideAddFolderDialog() {
 function dispEditFolderDialog() {
   let $editDialog = $('.editDialog').eq(0);
   let $fade = $('.fade').eq(0);
-  dispToggle($editDialog);
 
+  $editDialog.css({'display': 'block'});
   $fade.addClass('fade-active');
   $editDialog.animate({
     top: "25%",
@@ -69,7 +62,7 @@ function hideEditFolderDialog() {
   let $fade = $('.fade').eq(0);
 
   $fade.removeClass('fade-active');
-  dispToggle($editDialog);
+  $editDialog.css({'display': 'none'});
 }
 
 
@@ -99,12 +92,6 @@ export default class UserDialog extends React.Component {
     dispEditFolderDialog();
   }
 
-  onChangeEditFolder(e) {
-    let stateCopy = JSON.parse(JSON.stringify(this.state));
-    stateCopy.newFolder.title = e.target.value;
-    this.setState(stateCopy);
-  }
-
   onChangeAddFolder(e) {
     let stateCopy = JSON.parse(JSON.stringify(this.state));
     stateCopy.newFolder.title = e.target.value;
@@ -123,14 +110,13 @@ export default class UserDialog extends React.Component {
   }
 
   onSubmitEditFolder(folderInfo, e) {
-    let title = folderInfo.title;
     let folder = {
       id: this.props.todoInfo[this.props.curFolder].id,
       folderName: folderInfo.folderName,
       isDelete: folderInfo.isDelete
     };
 
-    TodoModel.updateTodoFolder(folder, (response) => {
+    TodoModel.updateTodoFolder(folder, () => {
       this.props.onSubmitEditFolder(folder);
     }, (error) => {
     });

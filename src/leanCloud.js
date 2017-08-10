@@ -46,24 +46,25 @@ export const TodoModel = {
       });
 
       foldersQuery.find().then( (folders) => {
-        folders.forEach((folder, index)=> {
-          if (folder.get('folderName') in obj) {
-            arr.push({
-              id: folder.get('objectId'),
-              folderName: folder.get('folderName'),
-              todos: obj[folder.get('folderName')],
-              isDisplayFinishedTodoList: false,
-            });
-          } else {
-            arr.push(
-              {
+        folders.filter((folder) => {return !folder.get('isDelete')})
+          .forEach((folder, index)=> {
+            if (folder.get('folderName') in obj) {
+              arr.push({
                 id: folder.get('objectId'),
                 folderName: folder.get('folderName'),
-                todos: [],
+                todos: obj[folder.get('folderName')],
                 isDisplayFinishedTodoList: false,
-              }
-            );
-          }
+              });
+            } else {
+              arr.push(
+                {
+                  id: folder.get('objectId'),
+                  folderName: folder.get('folderName'),
+                  todos: [],
+                  isDisplayFinishedTodoList: false,
+                }
+              );
+            }
         });
         console.log(arr);
         successFn.call(null, arr);
@@ -127,15 +128,49 @@ export const TodoModel = {
     });
   },
 
+
+  // deleteTodo({id, todoName}) {
+  //   let todo = AV.Object.createWithoutData('Todo', todoId);
+  //   todo.destroy().then(function(response) {
+  //     successFn && successFn.call(null);
+  //   }, function(error) {
+  //     errorFn && errorFn.call(null, error);
+  //   });
+  // },
+
+  deleteFolder(id, fodlerName) {
+    let todosQuery = new AV.Query('Todo');
+    let todoFolder = AV.Object.createWithoutData('TodoFolder', id);
+    todosQuery.include('folderObj');
+    todosQuery.equalTo('folderObj', todoFolder);
+    todosQuery.find().then( (response) => {
+      AV.Object.destroyAll(response);
+    });
+  },
+
   // 更新TodoFolder：主要是修改Folder name
   updateTodoFolder({id, folderName, isDelete}, successFn, errorFn) {
+    let _this = this;
     let todoFolder = AV.Object.createWithoutData('TodoFolder', id);
-    folderName !== undefined && todoFolder.set('folderName', folderName);
-    todoFolder.save().then( (response) => {
-      successFn && successFn.call(null, response);
-    }, (error) => {
-      errorFn && errorFn.call(null, error);
-    });
+
+    if (isDelete === true) {
+      // 删除todoFolder
+      todoFolder.destroy().then(function() {
+        _this.deleteFolder(id, folderName);
+        successFn && successFn.call(null);
+      }, function(error) {
+        errorFn && errorFn.call(null, error);
+      })
+    } else {
+
+      folderName !== undefined && todoFolder.set('folderName', folderName);
+      todoFolder.save().then( () => {
+        successFn && successFn.call(null);
+      }, (error) => {
+        errorFn && errorFn.call(null, error);
+      });
+
+    }
   },
 
   update({id, todoName,  isFinished, isFlag}, successFn, errorFn) {
@@ -178,7 +213,7 @@ export const TodoModel = {
 
     AV.Object.saveAll(folders).then( (response) => {
       let folders = response.map((item) => {
-        return {id: item.id, isDisplayFinishedTodoList: false, todos: [], ...item.attributes};
+        return {id: item.id, isDisplayFinishedTodoList: false, isDelete: false, todos: [], ...item.attributes};
       });
       successFn & successFn.call(null, folders);
     }, (error) => {

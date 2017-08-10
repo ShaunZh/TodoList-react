@@ -225,6 +225,13 @@ class App extends Component {
     let stateCopy = JSON.parse(JSON.stringify(this.state)) ;
     stateCopy.todoInfo[stateCopy.currentFolderIndex].folderName = folderName;
     stateCopy.todoInfo[stateCopy.currentFolderIndex].isDelete = isDelete;
+    // 说明当前选中的 folder被删除，需要重新设置当前指定的fodler
+    if (isDelete === true) {
+      stateCopy.todoInfo.splice(stateCopy.currentFolderIndex, 1);
+      if (stateCopy.currentFolderIndex === stateCopy.todoInfo.length) {
+        stateCopy.currentFolderIndex--;
+      }
+    }
     this.setState(stateCopy);
   }
 
