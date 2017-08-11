@@ -27,7 +27,8 @@
   background-color: #fff;
   border: 1px solid #bbb;
   width: 390px;
-  box-shadow: 0 0 4px #bbb; }
+  box-shadow: 0 0 4px #bbb;
+  border-radius: 5px; }
   .deleteDialog .row {
     padding-top: 10px;
     padding-bottom: 10px;
@@ -43,7 +44,8 @@
     align-items: center;
     font-size: 13px; }
     .deleteDialog .main .desp {
-      color: #888; }
+      color: #f92629;
+      font-weight: bolder; }
   .deleteDialog .btn-group button {
     margin-right: 15px;
     margin-bottom: 10px;

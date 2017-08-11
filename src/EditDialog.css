@@ -64,6 +64,10 @@
       font-weight: bolder; }
     .editDialog .accountInfoWrap .email {
       color: #999; }
+  .editDialog .actions .action-icon-delete {
+    position: absolute;
+    left: 0;
+    bottom: 15px; }
   .editDialog .btn-group {
     margin-top: 10px;
     float: right; }

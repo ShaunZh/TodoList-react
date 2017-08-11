@@ -13,7 +13,7 @@ import moment from 'moment';
 import LoginDialog from './LoginDialog';
 import UserDialog from './UserDialog';
 
-import {TodoModel} from './leanCloud';
+import {TodoModel, signOut, getCurrentUser} from './leanCloud';
 
 
 
@@ -77,6 +77,7 @@ class App extends Component {
         // title: '', creater: '', time: ''
       },
     };
+
   }
 
 
@@ -184,24 +185,53 @@ class App extends Component {
   //   this.setState(stateCopy);
   // }
 
+
+  createFlagInfo(todoInfo) {
+    let flagTodos = [];
+    for (let folder = 0; folder < todoInfo.length; folder++) {
+      for (let i = 0; i < todoInfo[folder].todos.length; i++) {
+        if (todoInfo[folder].todos[i].isFlag === true) {
+          flagTodos.push(todoInfo[folder].todos[i]);
+        }
+      }
+    }
+    return flagTodos;
+  }
   reloadTodoInfo(user) {
 
     if (user) {
+      let _this = this;
       TodoModel.getByUser(user, (todos) => {
-        let stateCopy = JSON.parse(JSON.stringify(this.state));
-        stateCopy.todoInfo = todos;
+        let stateCopy = JSON.parse(JSON.stringify(_this.state));
+        stateCopy .todoInfo = todos;
+        // let flagTodos = [];
+        // for (let folder = 0; folder < _this.state.todoInfo.length; folder++) {
+        //   for (let i = 0; i < _this.state.todoInfo[folder].todos.length; i++) {
+        //     if (_this.state.todoInfo[folder].todos[i].isFlag === true) {
+        //       flagTodos.push(_this.state.todoInfo[folder].todos[i]);
+        //     }
+        //   }
+        // }
+        // if (flagTodos.length > 0) {
+        //    _this.state.todoInfo.splice(2, 0, {
+        //      rootFlag: true,
+        //      id: '0',
+        //      folderName: '已加标记',
+        //      todos: flagTodos,
+        //      isDisplayFinishedTodoList: false
+        //    });
+        // }
         stateCopy.accountInfo = user;
+
         this.setState(stateCopy);
 
         console.log('todos');
         console.log(todos);
-
       });
     }
   }
 
   initNewUserFolders() {
-
   }
 
 
@@ -235,6 +265,102 @@ class App extends Component {
     this.setState(stateCopy);
   }
 
+  onClickTodoFlag(todo, e) {
+    console.log('flag');
+//    let oldFlag= todo.flag;
+//    // let todoIndex =
+//
+//    todo.isFlag = todo.isFlag === false ? true : false;
+//    TodoModel.update.bind(this)(todo, (response) => {
+//      let stateCopy = JSON.parse(JSON.stringify(this.state));
+//      let todoIndex = stateCopy.todoInfo[this.state.currentFolderIndex].todos.indexOf(todo);
+//      stateCopy.todoInfo[stateCopy.currentFolderIndex].todos[todoIndex].isFlag = todo.isFlag;
+//      stateCopy.todoInfo[stateCopy.currentFolderIndex].todos[todoIndex].updateTime = response.updatedAt;
+//
+//      // if (todo.isFlag === true) {
+//      //   if (this.state.todoInfo.length >= 3 && 'rootFlag' in this.state.todoInfo[2]) {
+//      //     this.state.todoInfo[2].todos.push(todo);
+//      //   } else {
+//      //     // 创建 已加标记 清单
+//      //     this.state.todoInfo.splice(2, 0, {
+//      //       rootFlag: true,
+//      //       id: '0',
+//      //       folderName: '已加标记',
+//      //       todos: [],
+//      //       isDisplayFinishedTodoList: false
+//      //     });
+//      //     this.state.todoInfo[2].todos.push(todo);
+//      //   }
+//      // } else {
+//      //   this.state.todoInfo[2].todos = this.state.todoInfo[2].todos.filter((item) => {
+//      //     return item.isFlag;
+//      //   })
+//      //   if (this.state.todoInfo[2].todos.length <= 0) {
+//      //     this.state.todoInfo.splice(2, 1);
+//      //   }
+//      // }
+//      // this.setState(this.state);
+//
+//      // 设置标志
+//      if (todo.isFlag === true) {
+//        // 说明已加标记清单存在&
+//            if (stateCopy .todoInfo.length >= 3 & 'rootFlag' in stateCopy.todoInfo[2]) {
+//          stateCopy.todoInfo[2].todos.push(todo);
+//        } else {
+//          // 创建 已加标记 清单
+//          stateCopy.todoInfo.splice(2, 0, {
+//            rootFlag: true,
+//            id: '0',
+//            folderName: '已加标记',
+//            todos: [],
+//            isDisplayFinishedTodoList: false
+//          });
+//          stateCopy.todoInfo[2].todos.push(todo);
+//        }
+//      } else {
+//        // 如果是清除 todo的flag标志
+//        if (stateCopy.todoInfo[2].todos.length <= 1) {
+//          // 如果已加标记清单中只有一个todo，此时清除该todo的flag标志后，标记清单中没有了todo ，因此将标记清单清除
+//          stateCopy.todoInfo.splice(2, 1);
+//        } else {
+//          // 这一步清除 flag 时 要分为两种情况进行处理：在非 已加标志 清单中清除标志，在已加标志 清单中清除标志
+//          //
+//          if (stateCopy.currentFolderIndex !== 2) {
+//            stateCopy.todoInfo[2].todos = stateCopy.todoInfo[2].todos.filter((item) => {
+//              // 根据id 来判断当前清除的是哪个todo的标志
+//              return (todo.id !== item.id);
+//            })
+//          }
+//        }
+//      }
+//      this.setState(stateCopy);
+//    }, (error) => {
+//       todo.isFlag = oldFlag;
+//       this.setState(this.state);
+//     });
+  }
+
+
+  onClickDeleteTodo(index, e) {
+    let todo = this.state.todoInfo[this.state.currentFolderIndex].todos[index];
+    let stateCopy = JSON.parse(JSON.stringify(this.state));
+    let _this = this;
+    TodoModel.destroyTodo(todo.id, (response) => {
+      stateCopy.todoInfo[stateCopy.currentFolderIndex].todos.splice(index, 1);
+      _this.setState(stateCopy);
+    }, (error) => {})
+  }
+
+
+  onLogout() {
+    signOut();
+    let stateCopy = JSON.parse(JSON.stringify(this.state));
+    stateCopy.currentFolderIndex = 0;
+    stateCopy.accountInfo.id = '';
+    stateCopy.todoInfo = [];
+    this.setState(stateCopy);
+  }
+
 
   render() {
     console.log('更新');
@@ -257,6 +383,9 @@ class App extends Component {
                       onLoadIsDisFinishedTodoList={this.onLoadIsDisFinishedTodoList.bind(this)}
                       onClickFinished={this.onClickFinished.bind(this)}
                       onSubmitEditFolder={this.onSubmitEditFolder.bind(this)}
+                      onClickTodoFlag={this.onClickTodoFlag.bind(this)}
+                      onClickDeleteTodo={this.onClickDeleteTodo.bind(this)}
+                      onLogout={this.onLogout.bind(this)}
          />
           :
           <LoginDialog onSignIn={this.onSignInOrSignUp.bind(this)}

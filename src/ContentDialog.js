@@ -10,12 +10,16 @@ import './ContentDialog.css';
 import AddTodo from './AddTodo';
 import $ from 'jquery';
 import moment from 'moment';
+import DeleteDialog from './DeleteDialog';
 
 export default class ContentDialog extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isDispFinishedTodolist: 'false'
+      isDispFinishedTodolist: 'false',
+      selectTodo: {},
+      selectTodoIndex: 0,
+
       // todoFolderInfo: {
       //   // 当前选中folder的名字
       //   folderName: '我的Todo',
@@ -44,15 +48,45 @@ export default class ContentDialog extends Component {
   }
 
 
+  // 弹出删除对话框
+  onDelete(item, e) {
+    let $deleteDialog = $('.contentWrap').find('.deleteDialog').eq(0);
+    let $fade = $('.fade').eq(0);
+    $fade.addClass('fade-active');
 
+    $deleteDialog.css({'display':'block'});
+    $deleteDialog.animate({
+      top: '25%'
+    }, 100, () =>{
 
-
-  onClickFinished(item, e) {
-    console.log('item');
-    console.log(item);
-    this.props.onClickFinished(item);
+    });
+    let stateCopy = JSON.parse(JSON.stringify(this.state));
+    stateCopy.selectTodo = item;
+    stateCopy.selectTodoIndex = this.props.todoFolderInfo.todos.indexOf(item);
+    this.setState(stateCopy);
   }
 
+  // 删除对话框中的取消键回调函数
+  onCancelDelete(e) {
+    let $deleteDialog = $('.contentWrap').find('.deleteDialog').eq(0);
+    let $fade = $('.fade').eq(0);
+    $fade.removeClass('fade-active');
+    $deleteDialog.css({
+      'display': 'none'
+    });
+    this.setState(this.state);
+  }
+
+  // 删除对话框中的确认键回调函数
+  onConfirmDelete(e) {
+    let $deleteDialog = $('.contentWrap').find('.deleteDialog').eq(0);
+    let $fade = $('.fade').eq(0);
+    let stateCopy = JSON.parse(JSON.stringify(this.state));
+    $deleteDialog.css({'display': 'none'});
+    $fade.removeClass('fade-active');
+
+    this.props.onClickDeleteTodo(this.state.selectTodoIndex);
+  }
 
   render() {
     // let todos = this.props.todoFolderInfo.todos.map((item, index) => {
@@ -71,10 +105,10 @@ export default class ContentDialog extends Component {
                           .map( (item, index) => {
                             return (
                               <li key={index.toString()} className="todoItem">
-                                <span className="todo-list-icon todo-list-icon-select" onClick={this.onClickFinished.bind(this, item)}></span>
+                                <span className="todo-list-icon todo-list-icon-select" onClick={this.props.onClickFinished.bind(this, item)}></span>
                                 <span className="todoName">{item.todoName}</span>
                                 <span className="todoTime">{moment(item.updateTime).format('YYYY/MM/DD HH:mm')}</span>
-                                <span className={"todo-list-icon todo-list-icon-flag-"+item.isFlag}></span>
+                                <span className={"todo-list-icon todo-list-icon-flag-delete"} onClick={this.onDelete.bind(this, item)}></span>
                               </li>
                             );
                           });
@@ -84,7 +118,7 @@ export default class ContentDialog extends Component {
                           .map((item, index) => {
                             return (
                               <li key={index.toString()} className="todoItem">
-                                <span className="todo-list-icon todo-list-icon-selected" onClick={this.onClickFinished.bind(this, item)}></span>
+                                <span className="todo-list-icon todo-list-icon-selected" onClick={this.props.onClickFinished.bind(this, item)}></span>
                                 <div className="finishedInfoWrap">
                                   <div className="todoName">{item.todoName}</div>
                                   <div className="finishedInfo">
@@ -93,7 +127,7 @@ export default class ContentDialog extends Component {
                                   </div>
                                 </div>
                                 <span className="createTime">{moment(item.updateTime).format('YYYY/MM/DD HH:mm')}</span>
-                                <span className={"todo-list-icon todo-list-icon-flag-"+item.isFlag}></span>
+                                <span className={"todo-list-icon todo-list-icon-flag-delete"} onClick={this.onDelete.bind(this, item)}></span>
                               </li>
                             );
                           });
@@ -119,6 +153,10 @@ export default class ContentDialog extends Component {
           {/*{(this.props.todoFolderInfo.isDisplayFinishedTodoList || this.props.todoFolderInfo.isDelete )? null : finishedTodos}*/}
           {this.props.todoFolderInfo.isDisplayFinishedTodoList ? null : finishedTodos}
         </ul>
+        <DeleteDialog title={this.state.selectTodo.todoName}
+                      onCancel={this.onCancelDelete.bind(this)}
+                      onConfirm={this.onConfirmDelete.bind(this)}
+        />
       </div>
     )
   }

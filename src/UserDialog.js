@@ -13,7 +13,7 @@ import ContentDialog from './ContentDialog';
 import CreateFolder from './CreateFolder';
 import EditDialog from './EditDialog';
 
-import {TodoModel} from './leanCloud';
+import {TodoModel, signOut} from './leanCloud';
 
 
 
@@ -65,6 +65,14 @@ function hideEditFolderDialog() {
   $editDialog.css({'display': 'none'});
 }
 
+// 隐藏 deleteTodoDialog
+function hideDeleteTodoDialog() {
+  let $editDialog= $('.editDialog').eq(0);
+  let $fade = $('.fade').eq(0);
+
+  $fade.removeClass('fade-active');
+  $editDialog.css({'display': 'none'});
+}
 
 export default class UserDialog extends React.Component {
   constructor(props) {
@@ -136,6 +144,8 @@ export default class UserDialog extends React.Component {
     this.onCloseAddFolderDialog();
   }
 
+
+
   render() {
     console.log('todoInfo');
     console.log(this.props.todoInfo);
@@ -147,6 +157,7 @@ export default class UserDialog extends React.Component {
                          onClickCurFolder={this.props.onClickFolder.bind(this)}
                          onActiveAddFolder={this.onActiveAddFolder.bind(this)}
                          onActiveEditFolder={this.onActiveEditFolder.bind(this)}
+                         onLogout={this.props.onLogout.bind(this)}
         />
 
         <ContentDialog
@@ -157,6 +168,8 @@ export default class UserDialog extends React.Component {
           onChangeNewTodo={this.props.onChangeNewTodo.bind(this)}
           onLoadIsDisFinishedTodoList={this.props.onLoadIsDisFinishedTodoList.bind(this)}
           onClickFinished={this.props.onClickFinished.bind(this)}
+          onClickTodoFlag={this.props.onClickTodoFlag.bind(this)}
+          onClickDeleteTodo={this.props.onClickDeleteTodo.bind(this)}
         />
 
          <CreateFolder user={this.props.user}

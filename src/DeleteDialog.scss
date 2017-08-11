@@ -10,9 +10,10 @@
   z-index: 1000;
   background-color: #fff;
 
-    border: 1px solid #bbb;
-    width: 390px;
-    box-shadow: 0 0 4px #bbb;
+  border: 1px solid #bbb;
+  width: 390px;
+  box-shadow: 0 0 4px #bbb;
+  border-radius:  5px;
 
   .row {
     padding-top: 10px;
@@ -32,7 +33,8 @@
     align-items:  center;
     font-size: $font-size-small;
     .desp {
-      color: #888
+      color: #f92629;
+      font-weight: bolder;
     }
   }
 

@@ -25,8 +25,27 @@ AV.init({
 export default AV
 
 export const TodoModel = {
+
+
+  getFlagTodos(seccessFn, errorFn) {
+    let todosQuery = new AV.Query('Todo');
+    todosQuery.include('folderObj');
+    todosQuery.equalTo('isFlag', true);
+    todosQuery.find().then( (todos) => {
+      todos = todos.map( (todo) => {
+        return {
+          id: todo.id,
+          ...todo.attributes
+        };
+      });
+      seccessFn && seccessFn.call(null, todos);
+    }, (error) => {
+      error && errorFn.call(null);
+    });
+  },
+
   getByUser(user, successFn, errorFn) {
-    let foldersQuery = new AV.Query('TodoFolder');
+    let foldersQuery = new AV.Query('TodoFolder')
     let todosQuery = new AV.Query('Todo');
     todosQuery.include('folderObj');
     todosQuery.find().then( (todos) => {
@@ -66,7 +85,18 @@ export const TodoModel = {
               );
             }
         });
-        console.log(arr);
+        // this.getFlagTodos( (flagTodos) => {
+        //   if (flagTodos.length) {
+        //     arr.splice(2, 0, {
+        //       rootFlag: true,
+        //       id: '0',
+        //       folderName: '已加标记',
+        //       todos: flagTodos,
+        //       isDisplayFinishedTodoList: false
+        //     });
+        //   }
+        //   successFn.call(null, arr);
+        // });
         successFn.call(null, arr);
       });
     }, (error) => {
@@ -184,19 +214,18 @@ export const TodoModel = {
     }, (error) => errorFn && errorFn.call(this, error))
   },
 
-  destroy(todoId, successFn, errorFn) {
-    // let todo = AV.Object.createWithoutData('Todo', todoId);
-    // todo.destroy().then(function(response) {
-    //   successFn && successFn.call(null);
-    // }, function(error) {
-    //   errorFn && errorFn.call(null, error);
-    // })
-    TodoModel.update({id: todoId, deleted: true}, successFn, errorFn);
+  destroyTodo(todoId, successFn, errorFn) {
+    let todo = AV.Object.createWithoutData('Todo', todoId);
+    todo.destroy().then(function(response) {
+      successFn && successFn.call(null);
+    }, function(error) {
+      errorFn && errorFn.call(null, error);
+    })
   },
   init(successFn, errorFn) {
     let folders = [];
-    let foldersName = ['我的一天', '已加标记', 'Todo'];
-    for (var i = 0; i < 3; i++ ) {
+    let foldersName = ['我的一天', 'Todo'];
+    for (var i = 0; i < 2; i++ ) {
       let TodoFolder = AV.Object.extend('TodoFolder');
       let todoFolder = new TodoFolder();
       todoFolder.set('folderName', foldersName[i]);

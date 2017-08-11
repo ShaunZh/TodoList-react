@@ -33,9 +33,6 @@ export default class TodoFolder extends Component {
   }
 
 
-
-
-
   onClick(e) {
     let folders = $('.todoFolderItem');
     let modifyIcons = $('.todoFolderItem .todo-folder-icon-modify');

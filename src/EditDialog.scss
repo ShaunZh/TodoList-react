@@ -48,6 +48,14 @@
     }
   }
 
+  .actions{
+    .action-icon-delete {
+      position: absolute;
+      left: 0;
+      bottom: 15px;
+    }
+  }
+
   .btn-group {
     margin-top: 10px;
     float: right;

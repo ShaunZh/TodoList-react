@@ -8,14 +8,23 @@ $icon-color-default: #5b5b5b;
 $icon-color-modify: #afafaf;
 $icon-color-logout: #6e6e6e;
 
+%active-icon-style {
+  color: #bbb;
+  &:hover {
+    cursor: pointer;
+    color: #000 !important;
+  }
+}
+
 @font-face {
   font-family: 'iconfont';  /* project id 374892 */
-  src: url('https://at.alicdn.com/t/font_374892_0a4ygk4erovl5wmi.eot');
-  src: url('https://at.alicdn.com/t/font_374892_0a4ygk4erovl5wmi.eot?#iefix') format('embedded-opentype'),
-  url('https://at.alicdn.com/t/font_374892_0a4ygk4erovl5wmi.woff') format('woff'),
-  url('https://at.alicdn.com/t/font_374892_0a4ygk4erovl5wmi.ttf') format('truetype'),
-  url('https://at.alicdn.com/t/font_374892_0a4ygk4erovl5wmi.svg#iconfont') format('svg');
+  src: url('https://at.alicdn.com/t/font_374892_mzavwuluum5tgldi.eot');
+  src: url('https://at.alicdn.com/t/font_374892_mzavwuluum5tgldi.eot?#iefix') format('embedded-opentype'),
+  url('https://at.alicdn.com/t/font_374892_mzavwuluum5tgldi.woff') format('woff'),
+  url('https://at.alicdn.com/t/font_374892_mzavwuluum5tgldi.ttf') format('truetype'),
+  url('https://at.alicdn.com/t/font_374892_mzavwuluum5tgldi.svg#iconfont') format('svg');
 }
+
 .login-icon {
   font-family: iconfont;
   font-size: 20px;
@@ -53,10 +62,12 @@ $icon-color-logout: #6e6e6e;
   content: '\e63e';
   font-size: 24px;
 }
-.user-dialog-icon-logout:before {
-  content: '\e619';
-  font-size: 24px;
-  color: $icon-color-logout;
+.user-dialog-icon-logout {
+  &:before {
+    content: '\e619';
+    font-size: 24px;
+  }
+  @extend %active-icon-style ;
 }
 
 .todo-folder-icon-day:before {
@@ -79,11 +90,20 @@ $icon-color-logout: #6e6e6e;
   color: $icon-color-default;
 }
 
-.todo-folder-icon-modify:before {
-  content: '\e638';
-  color: $icon-color-modify;
-}
+//.todo-folder-icon-modify:before {
+//  content: '\e638';
+//  color: $icon-color-modify;
+//}
 
+
+.todo-folder-icon-modify {
+  &:before {
+    content: '\e638';
+    //color: $icon-color-modify;
+  }
+
+  @extend %active-icon-style ;
+}
 .todo-list-icon-add:before {
   content: '\e604';
   color: #ebe8eb;
@@ -109,10 +129,23 @@ $icon-color-logout: #6e6e6e;
   color: #999;
 }
 
-.action-icon-delete:before {
-  content: '\e677';
-  font-size: 16px;
-  color: #999;
+.todo-list-icon-flag-true {
+  color: #ffd800;
+}
+.todo-list-icon-flag-true:before {
+  content: '\e64d';
 }
 
+.action-icon-delete {
+  font-size: 20px;
+  @extend %active-icon-style ;
+}
 
+.todo-list-icon-flag-delete {
+  @extend %active-icon-style ;
+}
+
+.todo-list-icon-flag-delete:before,
+.action-icon-delete:before {
+  content: '\e677';
+}

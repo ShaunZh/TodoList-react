@@ -45,7 +45,7 @@ export default class LeftAsideDialog extends Component {
         <TopSearch
         />
 
-        <Account user={this.props.user}/>
+        <Account user={this.props.user} onLogout={this.props.onLogout.bind(this)}/>
         <div className="todoFolderItemWrap">
           {todoFolders}
         </div>
