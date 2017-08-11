@@ -13,7 +13,7 @@ export default function(props) {
     <div className="accountWrap">
       <span className="firstLetterUserName">{props.user.username.split('')[0]}</span>
       <span className="username">{props.user.username}</span>
-      <span className="user-dialog-icon user-dialog-icon-logout" onClick={props.onLogout.bind(this)}></span>  {/*onClick=''*/}
+      <span className="user-dialog-icon user-dialog-icon-logout" onClick={props.onLogout.bind(this)} title="点击退出登录"></span>  {/*onClick=''*/}
     </div>
   );
 }

@@ -37,7 +37,10 @@ export default class EditDialog extends Component{
 
 
   onSubmit(e) {
-    this.props.onSubmit(this.state.folderInfo);
+    if (this.state.folderInfo.folderName.trim() !== '')  {
+
+      this.props.onSubmit(this.state.folderInfo);
+    }
   }
 
   // 按键提交修改回调函数

@@ -106,10 +106,10 @@ export default class ContentDialog extends Component {
         .map( (item, index) => {
           return (
             <li key={index.toString()} className="todoItem">
-              <span className="todo-list-icon todo-list-icon-select" onClick={this.props.onClickFinished.bind(this, item)}></span>
+              <span className="todo-list-icon todo-list-icon-select" onClick={this.props.onClickFinished.bind(this, item)} title="点击完成任务"></span>
               <span className="todoName">{item.todoName}</span>
               <span className="todoTime">{moment(item.updateTime).format('YYYY/MM/DD HH:mm')}</span>
-              <span className={"todo-list-icon todo-list-icon-flag-delete"} onClick={this.onDelete.bind(this, item)}></span>
+              <span className={"todo-list-icon todo-list-icon-flag-delete"} onClick={this.onDelete.bind(this, item)} title="点击删除任务"></span>
             </li>
           );
         });
@@ -128,7 +128,7 @@ export default class ContentDialog extends Component {
                 </div>
               </div>
               <span className="createTime">{moment(item.updateTime).format('YYYY/MM/DD HH:mm')}</span>
-              <span className={"todo-list-icon todo-list-icon-flag-delete"} onClick={this.onDelete.bind(this, item)}></span>
+              <span className={"todo-list-icon todo-list-icon-flag-delete"} onClick={this.onDelete.bind(this, item)} title="点击删除任务"></span>
             </li>
           );
         });

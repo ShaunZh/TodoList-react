@@ -15,11 +15,17 @@ function submit(props, e) {
   }
 }
 
+
+function getFocus(e) {
+  let input = document.querySelector('.addTodoWrap #addTodo');
+  input.focus();
+  // input.set
+}
 export default function(props) {
   return (
-    <div className="addTodoWrap">
-      <span className="todo-list-icon todo-list-icon-add"></span>
-      <input type="text" placeholder="添加任务" value={props.newTodoTitle}
+    <div className="addTodoWrap" title="点击添加任务">
+      <span className="todo-list-icon todo-list-icon-add" onClick={getFocus}></span>
+      <input id="addTodo" type="text" placeholder="添加任务" value={props.newTodoTitle}
       onChange={props.onChange}
       onKeyPress={submit.bind(null, props)}/>
     </div>

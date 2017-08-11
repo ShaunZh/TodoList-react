@@ -17,6 +17,11 @@ export default class CreateFolder extends Component {
     };
   }
 
+  onSubmit() {
+    if ('title' in this.props.newFolder && this.props.newFolder.title.trim() !== '') {
+      this.props.onSubmit.bind(this);
+    }
+  }
   keySubmit(e) {
     if (e.key === 'Enter') {
       if (e.target.value.trim() !== '') {
@@ -42,7 +47,7 @@ export default class CreateFolder extends Component {
         </div>
         <div className="btn-group">
           <button className="cancel-btn" onClick={this.props.onCancel.bind(this)}>取消</button>
-          <button className="confirm-btn" onClick={this.props.onSubmit.bind(this)}>保存</button>
+          <button className="confirm-btn" onClick={this.onSubmit.bind(this)}>保存</button>
         </div>
       </div>
 

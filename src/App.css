@@ -7,8 +7,8 @@
 @font-face {
   font-family: 'iconfont';
   /* project id 374892 */
-  src: url("https://at.alicdn.com/t/font_374892_mzavwuluum5tgldi.eot");
-  src: url("https://at.alicdn.com/t/font_374892_mzavwuluum5tgldi.eot?#iefix") format("embedded-opentype"), url("https://at.alicdn.com/t/font_374892_mzavwuluum5tgldi.woff") format("woff"), url("https://at.alicdn.com/t/font_374892_mzavwuluum5tgldi.ttf") format("truetype"), url("https://at.alicdn.com/t/font_374892_mzavwuluum5tgldi.svg#iconfont") format("svg"); }
+  src: url("//at.alicdn.com/t/font_374892_89m54libxgmygb9.eot");
+  src: url("//at.alicdn.com/t/font_374892_89m54libxgmygb9.eot?#iefix") format("embedded-opentype"), url("//at.alicdn.com/t/font_374892_89m54libxgmygb9.woff") format("woff"), url("//at.alicdn.com/t/font_374892_89m54libxgmygb9.ttf") format("truetype"), url("//at.alicdn.com/t/font_374892_89m54libxgmygb9.svg#iconfont") format("svg"); }
 .login-icon {
   font-family: iconfont;
   font-size: 20px;
@@ -40,7 +40,7 @@
   font-size: 24px; }
 
 .user-dialog-icon-logout:before {
-  content: '\e619';
+  content: '\e680';
   font-size: 24px; }
 
 .todo-folder-icon-day:before {
