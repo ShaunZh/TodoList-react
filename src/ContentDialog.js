@@ -99,39 +99,41 @@ export default class ContentDialog extends Component {
     //     </li>
     //   )
     // });
+    let unfinishedTodos, finishedTodos;
+    if (this.props.todoFolderInfo && this.props.todoFolderInfo.todos.length) {
+       unfinishedTodos = this.props.todoFolderInfo.todos
+        .filter( (item) => {return (item.isFinished === false);})
+        .map( (item, index) => {
+          return (
+            <li key={index.toString()} className="todoItem">
+              <span className="todo-list-icon todo-list-icon-select" onClick={this.props.onClickFinished.bind(this, item)}></span>
+              <span className="todoName">{item.todoName}</span>
+              <span className="todoTime">{moment(item.updateTime).format('YYYY/MM/DD HH:mm')}</span>
+              <span className={"todo-list-icon todo-list-icon-flag-delete"} onClick={this.onDelete.bind(this, item)}></span>
+            </li>
+          );
+        });
 
-    let unfinishedTodos = this.props.todoFolderInfo.todos
-                          .filter( (item) => {return (item.isFinished === false);})
-                          .map( (item, index) => {
-                            return (
-                              <li key={index.toString()} className="todoItem">
-                                <span className="todo-list-icon todo-list-icon-select" onClick={this.props.onClickFinished.bind(this, item)}></span>
-                                <span className="todoName">{item.todoName}</span>
-                                <span className="todoTime">{moment(item.updateTime).format('YYYY/MM/DD HH:mm')}</span>
-                                <span className={"todo-list-icon todo-list-icon-flag-delete"} onClick={this.onDelete.bind(this, item)}></span>
-                              </li>
-                            );
-                          });
+      finishedTodos = this.props.todoFolderInfo.todos
+        .filter( (item) => {return (item.isFinished === true); })
+        .map((item, index) => {
+          return (
+            <li key={index.toString()} className="todoItem">
+              <span className="todo-list-icon todo-list-icon-selected" onClick={this.props.onClickFinished.bind(this, item)}></span>
+              <div className="finishedInfoWrap">
+                <div className="todoName">{item.todoName}</div>
+                <div className="finishedInfo">
+                  <span className="finishedTime">{}</span>
+                  <span className="username">{'由 ' + this.props.user.username +' 完成 '}</span>
+                </div>
+              </div>
+              <span className="createTime">{moment(item.updateTime).format('YYYY/MM/DD HH:mm')}</span>
+              <span className={"todo-list-icon todo-list-icon-flag-delete"} onClick={this.onDelete.bind(this, item)}></span>
+            </li>
+          );
+        });
 
-    let finishedTodos = this.props.todoFolderInfo.todos
-                          .filter( (item) => {return (item.isFinished === true); })
-                          .map((item, index) => {
-                            return (
-                              <li key={index.toString()} className="todoItem">
-                                <span className="todo-list-icon todo-list-icon-selected" onClick={this.props.onClickFinished.bind(this, item)}></span>
-                                <div className="finishedInfoWrap">
-                                  <div className="todoName">{item.todoName}</div>
-                                  <div className="finishedInfo">
-                                    <span className="finishedTime">{}</span>
-                                    <span className="username">{'由 ' + this.props.user.username +' 完成 '}</span>
-                                  </div>
-                                </div>
-                                <span className="createTime">{moment(item.updateTime).format('YYYY/MM/DD HH:mm')}</span>
-                                <span className={"todo-list-icon todo-list-icon-flag-delete"} onClick={this.onDelete.bind(this, item)}></span>
-                              </li>
-                            );
-                          });
-
+    }
     return (
       <div className="contentWrap">
         <div className="folder-title-wrap">
@@ -144,14 +146,14 @@ export default class ContentDialog extends Component {
 
         <ul className="unfinishedTodoItemsWrap">
           {/*{this.props.todoFolderInfo.isDelete ? null : unfinishedTodos}*/}
-          {unfinishedTodos}
+          {unfinishedTodos ? unfinishedTodos : null}
         </ul>
         <div className="loadFinishedTodos">
           <button onClick={this.props.onLoadIsDisFinishedTodoList.bind(null, this.props.todoFolderInfo)}>显示已完成任务</button>
         </div>
         <ul className="finishedTodoItemsWrap">
           {/*{(this.props.todoFolderInfo.isDisplayFinishedTodoList || this.props.todoFolderInfo.isDelete )? null : finishedTodos}*/}
-          {this.props.todoFolderInfo.isDisplayFinishedTodoList ? null : finishedTodos}
+          {finishedTodos && this.props.todoFolderInfo.isDisplayFinishedTodoList  ? null : finishedTodos}
         </ul>
         <DeleteDialog title={this.state.selectTodo.todoName}
                       onCancel={this.onCancelDelete.bind(this)}

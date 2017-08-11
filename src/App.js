@@ -25,7 +25,7 @@ class App extends Component {
       isActiveAddFolderDialog: false,
       currentTab: 'userDialog', // 或 loginDialog
       user: {},
-      accountInfo: {
+      accountInfo: getCurrentUser() || {
         // username: '张111',
         // id: '1111',
         // email: '308826842@.com'
@@ -49,18 +49,6 @@ class App extends Component {
         // },
         // {
         //   // 清单名称
-        //   folderName: '已加标记',
-        //   todos: [],
-        //   // // 未完成的todos
-        //   // unfinishedTodos: [
-        //   // ],
-        //   // // 已完成的todos
-        //   // finishedTodos: [
-        //   // ],
-        //   isDispFinishedTodos: false
-        // },
-        // {
-        //   // 清单名称
         //   folderName: 'Todo',
         //   todos: [],
         //   // // 未完成的todos
@@ -77,7 +65,9 @@ class App extends Component {
         // title: '', creater: '', time: ''
       },
     };
-
+    if (this.state.accountInfo) {
+      this.reloadTodoInfo(this.state.accountInfo);
+    }
   }
 
 
@@ -355,9 +345,9 @@ class App extends Component {
   onLogout() {
     signOut();
     let stateCopy = JSON.parse(JSON.stringify(this.state));
-    stateCopy.currentFolderIndex = 0;
-    stateCopy.accountInfo.id = '';
-    stateCopy.todoInfo = [];
+    // stateCopy.currentFolderIndex = 0;
+    stateCopy.accountInfo = {};
+    // stateCopy.todoInfo = [];
     this.setState(stateCopy);
   }
 

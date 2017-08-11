@@ -27,7 +27,7 @@ export default class TodoFolder extends Component {
         case '我的一天':
         case '已加标记':
         case 'Todo':    return '';
-        default: return 'todo-folder-icon-modify';
+        default: return 'todo-folder-icon todo-folder-icon-modify';
       }
     })();
   }
@@ -50,7 +50,7 @@ export default class TodoFolder extends Component {
         <span className={"todo-folder-icon " + this.folderIcon}></span>
         <span className="todoFolderName">{this.props.todoFolderInfo.folderName}</span>
         <span className="todoSum">{this.props.todoFolderInfo.todos.length}</span>
-        <span className={"todo-folder-icon " + this.folderModifyIcon} onClick={this.props.onActiveEditFolder.bind(this)}></span>
+        <span className={this.folderModifyIcon} onClick={this.props.onActiveEditFolder.bind(this)}></span>
       </div>
     )
 

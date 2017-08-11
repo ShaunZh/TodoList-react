@@ -149,6 +149,9 @@ export default class UserDialog extends React.Component {
   render() {
     console.log('todoInfo');
     console.log(this.props.todoInfo);
+    if (!this.props.todoInfo.length) {
+      return <div></div>;
+    }
     return (
       <div className="userDialogWrap">
         <div className="fade"></div>

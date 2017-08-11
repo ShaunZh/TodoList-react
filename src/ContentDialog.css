@@ -26,6 +26,7 @@
     background-color: #668964;
     color: #fff; }
     .contentWrap .addTodoWrap input {
+      flex: 1;
       height: 46px;
       background-color: #668964;
       color: #fff; }
