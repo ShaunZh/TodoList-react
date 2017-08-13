@@ -18,6 +18,7 @@
 .contentWrap {
   flex: 1;
   border-left: 1px solid #ddd;
+  overflow: scroll;
 
   .folder-title-wrap {
     padding-left: 15px;
