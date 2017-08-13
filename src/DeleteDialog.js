@@ -13,17 +13,17 @@ export default function(props) {
     <div className="deleteDialog">
       <div className="main">
         <div className="left">
-          我是一个图标
+          <img src="./icon.jpg" alt="我是一个图䯮"/>
         </div>
         <div className="right">
-          <h3>[ {props.title} ] 将被永久删除</h3>
-          <p className="desp">你将无法撤销此操作。 </p>
+          <h3>主人，您真的要将 "{props.title}" 抛下吗？</h3>
+          <p className="desp">一转身，就是一辈子呀！主人请三思 </p>
         </div>
       </div>
       <div className="row actions">
           <div className="btn-group">
-            <button className="confirm-btn" onClick={props.onConfirm.bind(this)}>删除</button>
-            <button className="cancel-btn" onClick={props.onCancel.bind(this)}>取消</button>
+            <button className="confirm-btn" onClick={props.onConfirm.bind(this)}>来世再见</button>
+            <button className="cancel-btn" onClick={props.onCancel.bind(this)}>到我怀里</button>
           </div>
       </div>
     </div>

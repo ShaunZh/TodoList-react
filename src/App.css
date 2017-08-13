@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .user-dialog-icon-logout, .todo-folder-icon-modify, .action-icon-delete, .todo-list-icon-flag-delete {
   color: #bbb; }
   .user-dialog-icon-logout:hover, .todo-folder-icon-modify:hover, .action-icon-delete:hover, .todo-list-icon-flag-delete:hover {
@@ -39,9 +40,10 @@
   content: '\e63e';
   font-size: 24px; }
 
-.user-dialog-icon-logout:before {
-  content: '\e680';
-  font-size: 24px; }
+.user-dialog-icon-logout {
+  font-size: 20px; }
+  .user-dialog-icon-logout:before {
+    content: '\e680'; }
 
 .todo-folder-icon-day:before {
   content: '\e9bb';
@@ -94,6 +96,10 @@
 .todo-list-icon-flag-delete:before,
 .action-icon-delete:before {
   content: '\e677'; }
+
+body {
+  font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif,"瀹嬩綋" !important;
+  background-color: #E3E8F8; }
 
 html, body {
   height: 100%; }

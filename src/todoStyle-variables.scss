@@ -1,14 +1,13 @@
 @charset "utf-8";
 
 $body-bg:     #fff;
-
 $login-bk-color: #FAFAFA;
 
 $font-size-base: 16px;
 $font-size-large: ceil(($font-size-base * 1.25));
 $font-size-small: ceil(($font-size-base * 0.8));
 $login-base-font-color: #a3a3a2;
-$theme-color: #4094DD;
+$theme-color: #3e588f;
 $input-color: #919190;
 $btn-base-color: #2b88d9;
 $btn-active-color: #4094dd;
@@ -18,13 +17,13 @@ $font-base-color: #3d3d3d;
 $login-icon-theme-color: #4094DD;
 
 // userDialog 变量
-$user-dialog-theme-color: #668964;        // 主题颜色
+$user-dialog-theme-color: #3e588f; // #324E7B;        // 主题颜色
 $user-account-icon-bk-color: #E76663;     // 用户名第一个字图标的背景颜色
 
 $account-first-user-name-bk-color: #E76666;
 $account-first-user-name-fg-color: #fff;
 
 // contentDialog 变量
-$content-dialog-theme-color: #668964;
+$content-dialog-theme-color: #3e588f;  //#86a600;///#324E7B; //#668964;
 
 

@@ -13,7 +13,17 @@
   .contentWrap .folder-title-wrap {
     padding-left: 15px;
     height: 46px;
-    background-color: #668964;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1e5799+1,7db9e8+99 */
+    background: #1e5799;
+    /* Old browsers */
+    background: -moz-linear-gradient(left, #1e5799 1%, #7db9e8 99%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, #1e5799 1%, #7db9e8 99%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(left, #1e5799 1%, #7db9e8 99%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=0 );
+    /* IE6-9 */
     display: flex;
     align-items: center;
     color: #fff; }
@@ -23,12 +33,12 @@
     margin: 15px;
     height: 46px;
     border-radius: 4px;
-    background-color: #668964;
+    background-color: #3c76b2;
     color: #fff; }
     .contentWrap .addTodoWrap input {
       flex: 1;
       height: 46px;
-      background-color: #668964;
+      background-color: #3c76b2;
       color: #fff; }
     .contentWrap .addTodoWrap ::-webkit-input-placeholder {
       font-weight: bold;
@@ -48,13 +58,19 @@
     padding: 5px 10px;
     border-radius: 4px;
     font-size: 12px;
-    background-color: #668964; }
+    background-color: #3c76b2; }
+    .contentWrap .loadFinishedTodos:hover {
+      cursor: pointer;
+      background-color: #3e588f; }
     .contentWrap .loadFinishedTodos button {
+      width: 100%;
+      height: 100%;
+      outline: none;
       background-color: inherit;
       color: #fff; }
       .contentWrap .loadFinishedTodos button:hover {
         cursor: pointer;
-        background-color: #668964; }
+        background-color: #3e588f; }
   .contentWrap .finishedTodoItemsWrap {
     margin: 15px; }
     .contentWrap .finishedTodoItemsWrap .todoItem {

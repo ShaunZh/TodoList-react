@@ -12,7 +12,7 @@ import SignUpDialog from './SignUpDialog';
 import ForgotPassword from './ForgotPassword';
 
 import { signUp, signIn, sendPasswordResetEmail} from './leanCloud';
-
+import VerifyData from './VerifyData';
 
 export default class LoginDialog extends React.Component {
   constructor(props) {
@@ -46,8 +46,10 @@ export default class LoginDialog extends React.Component {
 
     e.preventDefault();
     let {username, password} = this.state.formData;
-    if (username !== undefined &&
-        password !== undefined) {
+    if (!(VerifyData.username(username) && VerifyData.password(password))) {
+      alert('输入有误');
+      return;
+    }
       let success = (user) => {
         this.props.onSignIn.call(null, 'signIn', user);
       };
@@ -58,15 +60,24 @@ export default class LoginDialog extends React.Component {
             alert('用户名与密码不匹配');
           }
           break;
+
+          case 211: {
+            alert('找不到用户')
+          }
+          break;
+
+          case 217: {
+            alert('无效的用户名')
+          }
+          break;
+
+          case 218: {
+            alert('无效的密码')
+          }
+          break;
         }
       };
-
       signIn(username, password, success, error);
-
-    } else {
-      alert('请输入正确的用户名和密码');
-      return ;
-    }
 
   };
 
@@ -76,9 +87,10 @@ export default class LoginDialog extends React.Component {
     e.preventDefault();
     let {username, password, email} = this.state.formData;
 
-    if (username !== undefined &&
-        password !== undefined &&
-        email !== undefined) {
+    if (!(VerifyData.username(username) && VerifyData.email(email) && VerifyData.password(password))) {
+      alert('输入有误');
+      return;
+    }
       let success = (user) => {
         this.props.onSignUp.call(null, 'signUp', user);
       };
@@ -89,18 +101,24 @@ export default class LoginDialog extends React.Component {
             alert('用户名被占用了');
           }
            break;
+          case 203: {
+            alert('电子邮箱被占用');
+          }
+          break;
+          case 204: {
+            alert('请输入电子邮箱')
+          }
         }
       };
       signUp(email, username, password, success, error);
-    } else {
-      alert("输入的注册信息有误！");
-    }
   };
 
   //-------- 忘记密码 -------------
   forgotOnSubmit() {
     if (this.state.formData.email !== undefined) {
-      console.log('忘记密码，提交邮箱信息找回密码');
+      sendPasswordResetEmail(this.state.formData.email, (response) => {
+        alert('重置密码邮件已发送，请主要查收');
+      });
     } else {
       alert('请输入有效的邮箱地址');
     }

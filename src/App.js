@@ -13,7 +13,8 @@ import moment from 'moment';
 import LoginDialog from './LoginDialog';
 import UserDialog from './UserDialog';
 
-import {TodoModel, signOut, getCurrentUser} from './leanCloud';
+import {TodoModel, signOut, getCurrentUser, sendPasswordResetEmail} from './leanCloud';
+
 
 
 
@@ -32,33 +33,19 @@ class App extends Component {
       },
       dispAllFinieshedTodoList: false,
       todoInfo: [
-        // {
-        //   // 清单名称
-        //   folderName: '我的一天',
-        //   todos: [],
-        //   // 未完成的todos
-        //   // unfinishedTodos: [
-        //   //   // {todoName: '第一个任务', createTime: '2017/8/6', isFlag: false},
-        //   // ],
-        //   // // 已完成的todos
-        //   // finishedTodos: [
-        //   //   // {todoName: '第一个任务', username: 'hexon', finishedTime: '2017/8/7', createTime: '2017/8/6', isFlag: false},
-        //   // ],
-        //   isDispFinishedTodos: false
-        //
-        // },
-        // {
-        //   // 清单名称
-        //   folderName: 'Todo',
-        //   todos: [],
-        //   // // 未完成的todos
-        //   // unfinishedTodos: [
-        //   // ],
-        //   // // 已完成的todos
-        //   // finishedTodos: [
-        //   // ],
-        //   isDispFinishedTodos: false
-        // }
+        {
+          // 清单名称
+          folderName: '我的一天',
+          todos: [],
+          isDispFinishedTodos: false
+
+        },
+        {
+          // 清单名称
+          folderName: 'Todo',
+          todos: [],
+          isDispFinishedTodos: false
+        }
       ],
       newFolder: {},
       newTodo : {
@@ -68,6 +55,7 @@ class App extends Component {
     if (this.state.accountInfo) {
       this.reloadTodoInfo(this.state.accountInfo);
     }
+
   }
 
 
@@ -82,7 +70,6 @@ class App extends Component {
     let stateCopy = JSON.parse(JSON.stringify(this.state));
     stateCopy.newFolder.title = e.target.value;
     this.setState(stateCopy);
-    console.log(e.target.value);
   }
 
 
@@ -97,7 +84,6 @@ class App extends Component {
         ],
       };
 
-      console.log('创建清单成功');
       let stateCopy = JSON.parse(JSON.stringify(this.state));
       stateCopy.todoInfo.push(newFolder);
       stateCopy.newFolder.title = '';
@@ -143,7 +129,6 @@ class App extends Component {
     todo.isFinished = todo.isFinished === false ? true : false;
 
     TodoModel.update.bind(this)(todo, (response) => {
-      console.log(todo.updateTime);
       todo.updateTime = response.updatedAt;
       this.setState(this.state);
     }, (error) => {
@@ -151,30 +136,6 @@ class App extends Component {
       this.setState(this.state);
     });
   }
-
-  //   let stateCopy = JSON.parse(JSON.stringify(this.state));
-  //   let idx = stateCopy.currentFolderIndex;
-  //   console.log(stateCopy.todoInfo[idx][todoWrapName]);
-  //   let todoList= stateCopy.todoInfo[idx][todoWrapName].splice(index, 1)[0];
-  //
-  //   console.log('todo');
-  //   console.log(todo);
-  //
-  //
-  //   let time = moment().format('YYYY/MM/DD');
-  //
-  //   if (todoWrapName === 'unfinishedTodos') {
-  //     todoList.username = stateCopy.accountInfo.username;
-  //     todoList.finishedTime = time;
-  //     stateCopy.todoInfo[stateCopy.currentFolderIndex].finishedTodos.unshift(todoList);
-  //   } else {
-  //     delete todoList.finishedTime;
-  //     todoList.createTime = time;
-  //     stateCopy.todoInfo[stateCopy.currentFolderIndex].unfinishedTodos.unshift(todoList);
-  //   }
-  //   this.setState(stateCopy);
-  // }
-
 
   createFlagInfo(todoInfo) {
     let flagTodos = [];
@@ -193,37 +154,15 @@ class App extends Component {
       let _this = this;
       TodoModel.getByUser(user, (todos) => {
         let stateCopy = JSON.parse(JSON.stringify(_this.state));
-        stateCopy .todoInfo = todos;
-        // let flagTodos = [];
-        // for (let folder = 0; folder < _this.state.todoInfo.length; folder++) {
-        //   for (let i = 0; i < _this.state.todoInfo[folder].todos.length; i++) {
-        //     if (_this.state.todoInfo[folder].todos[i].isFlag === true) {
-        //       flagTodos.push(_this.state.todoInfo[folder].todos[i]);
-        //     }
-        //   }
-        // }
-        // if (flagTodos.length > 0) {
-        //    _this.state.todoInfo.splice(2, 0, {
-        //      rootFlag: true,
-        //      id: '0',
-        //      folderName: '已加标记',
-        //      todos: flagTodos,
-        //      isDisplayFinishedTodoList: false
-        //    });
-        // }
+        if (todos.length > 0) {
+          // 对服务器中获取的数据 与 本地数据进行比较， 并将最终数据输出给todoInfo
+          stateCopy.todoInfo = todos;
+        }
         stateCopy.accountInfo = user;
-
         this.setState(stateCopy);
-
-        console.log('todos');
-        console.log(todos);
       });
     }
   }
-
-  initNewUserFolders() {
-  }
-
 
   onSignInOrSignUp(type, user) {
     if (type === 'signUp') {
@@ -256,78 +195,6 @@ class App extends Component {
   }
 
   onClickTodoFlag(todo, e) {
-    console.log('flag');
-//    let oldFlag= todo.flag;
-//    // let todoIndex =
-//
-//    todo.isFlag = todo.isFlag === false ? true : false;
-//    TodoModel.update.bind(this)(todo, (response) => {
-//      let stateCopy = JSON.parse(JSON.stringify(this.state));
-//      let todoIndex = stateCopy.todoInfo[this.state.currentFolderIndex].todos.indexOf(todo);
-//      stateCopy.todoInfo[stateCopy.currentFolderIndex].todos[todoIndex].isFlag = todo.isFlag;
-//      stateCopy.todoInfo[stateCopy.currentFolderIndex].todos[todoIndex].updateTime = response.updatedAt;
-//
-//      // if (todo.isFlag === true) {
-//      //   if (this.state.todoInfo.length >= 3 && 'rootFlag' in this.state.todoInfo[2]) {
-//      //     this.state.todoInfo[2].todos.push(todo);
-//      //   } else {
-//      //     // 创建 已加标记 清单
-//      //     this.state.todoInfo.splice(2, 0, {
-//      //       rootFlag: true,
-//      //       id: '0',
-//      //       folderName: '已加标记',
-//      //       todos: [],
-//      //       isDisplayFinishedTodoList: false
-//      //     });
-//      //     this.state.todoInfo[2].todos.push(todo);
-//      //   }
-//      // } else {
-//      //   this.state.todoInfo[2].todos = this.state.todoInfo[2].todos.filter((item) => {
-//      //     return item.isFlag;
-//      //   })
-//      //   if (this.state.todoInfo[2].todos.length <= 0) {
-//      //     this.state.todoInfo.splice(2, 1);
-//      //   }
-//      // }
-//      // this.setState(this.state);
-//
-//      // 设置标志
-//      if (todo.isFlag === true) {
-//        // 说明已加标记清单存在&
-//            if (stateCopy .todoInfo.length >= 3 & 'rootFlag' in stateCopy.todoInfo[2]) {
-//          stateCopy.todoInfo[2].todos.push(todo);
-//        } else {
-//          // 创建 已加标记 清单
-//          stateCopy.todoInfo.splice(2, 0, {
-//            rootFlag: true,
-//            id: '0',
-//            folderName: '已加标记',
-//            todos: [],
-//            isDisplayFinishedTodoList: false
-//          });
-//          stateCopy.todoInfo[2].todos.push(todo);
-//        }
-//      } else {
-//        // 如果是清除 todo的flag标志
-//        if (stateCopy.todoInfo[2].todos.length <= 1) {
-//          // 如果已加标记清单中只有一个todo，此时清除该todo的flag标志后，标记清单中没有了todo ，因此将标记清单清除
-//          stateCopy.todoInfo.splice(2, 1);
-//        } else {
-//          // 这一步清除 flag 时 要分为两种情况进行处理：在非 已加标志 清单中清除标志，在已加标志 清单中清除标志
-//          //
-//          if (stateCopy.currentFolderIndex !== 2) {
-//            stateCopy.todoInfo[2].todos = stateCopy.todoInfo[2].todos.filter((item) => {
-//              // 根据id 来判断当前清除的是哪个todo的标志
-//              return (todo.id !== item.id);
-//            })
-//          }
-//        }
-//      }
-//      this.setState(stateCopy);
-//    }, (error) => {
-//       todo.isFlag = oldFlag;
-//       this.setState(this.state);
-//     });
   }
 
 
@@ -345,16 +212,12 @@ class App extends Component {
   onLogout() {
     signOut();
     let stateCopy = JSON.parse(JSON.stringify(this.state));
-    // stateCopy.currentFolderIndex = 0;
     stateCopy.accountInfo = {};
-    // stateCopy.todoInfo = [];
     this.setState(stateCopy);
   }
 
 
   render() {
-    console.log('更新');
-    console.log(this.state.accountInfo.id);
     return (
       <div className="container">
         {this.state.accountInfo.id

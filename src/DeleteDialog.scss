@@ -22,19 +22,35 @@
   }
 
   h3 {
-    margin-top: 15px;
+    margin-top: 8px;
     margin-bottom: 10px;
     text-align: center;
   }
   .main{
+    padding-left: 10px;
+    padding-right: 10px;
     padding-top: 15px;
     padding-bottom: 15px;
     display: flex;
     align-items:  center;
     font-size: $font-size-small;
-    .desp {
-      color: #f92629;
-      font-weight: bolder;
+    .left {
+      margin-right: 20px;
+      img {
+        width: 108px;
+        height: 108px;
+      }
+    }
+    .right {
+      h3 {
+        text-align: left;
+        font-size: $font-size-base;
+      }
+      .desp {
+        color: #f92629;
+        font-weight: bolder;
+      }
+
     }
   }
 

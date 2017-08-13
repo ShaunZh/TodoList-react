@@ -89,18 +89,8 @@ export default class ContentDialog extends Component {
   }
 
   render() {
-    // let todos = this.props.todoFolderInfo.todos.map((item, index) => {
-    //   return (
-    //     <li key={index.toString()} className="todoItem">
-    //       <span className="todo-list-icon todo-list-icon-select" onClick={this.onClickFinished.bind(this, 'unfinishedTodos')}></span>
-    //       <span className="todoName">{item.title}</span>
-    //       <span className="todoTime">{item.createTime}</span>
-    //       <span className={"todo-list-icon todo-list-icon-flag-"+item.isFlag}></span>
-    //     </li>
-    //   )
-    // });
     let unfinishedTodos, finishedTodos;
-    if (this.props.todoFolderInfo && this.props.todoFolderInfo.todos.length) {
+    // if (this.props.todoFolderInfo && this.props.todoFolderInfo.todos.length) {
        unfinishedTodos = this.props.todoFolderInfo.todos
         .filter( (item) => {return (item.isFinished === false);})
         .map( (item, index) => {
@@ -133,7 +123,7 @@ export default class ContentDialog extends Component {
           );
         });
 
-    }
+    // }
     return (
       <div className="contentWrap">
         <div className="folder-title-wrap">

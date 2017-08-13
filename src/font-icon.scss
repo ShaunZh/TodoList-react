@@ -62,9 +62,9 @@ $icon-color-logout: #6e6e6e;
   font-size: 24px;
 }
 .user-dialog-icon-logout {
+  font-size: 20px;
   &:before {
     content: '\e680';
-    font-size: 24px;
   }
   @extend %active-icon-style ;
 }

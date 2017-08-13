@@ -34,16 +34,26 @@
     padding-bottom: 10px;
     border-top: 1px solid #bbb; }
   .deleteDialog h3 {
-    margin-top: 15px;
+    margin-top: 8px;
     margin-bottom: 10px;
     text-align: center; }
   .deleteDialog .main {
+    padding-left: 10px;
+    padding-right: 10px;
     padding-top: 15px;
     padding-bottom: 15px;
     display: flex;
     align-items: center;
     font-size: 13px; }
-    .deleteDialog .main .desp {
+    .deleteDialog .main .left {
+      margin-right: 20px; }
+      .deleteDialog .main .left img {
+        width: 108px;
+        height: 108px; }
+    .deleteDialog .main .right h3 {
+      text-align: left;
+      font-size: 16px; }
+    .deleteDialog .main .right .desp {
       color: #f92629;
       font-weight: bolder; }
   .deleteDialog .btn-group button {

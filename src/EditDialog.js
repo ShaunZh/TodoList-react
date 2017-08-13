@@ -104,8 +104,8 @@ export default class EditDialog extends Component{
     return (
       <div className="editDialogWrap">
         <div className="editDialog">
-          <h3>编辑清单</h3>
-          <input type="text" value={this.state.folderInfo.folderName} placeholder="清单名称"
+          <h3>那么土 整个容吧</h3>
+          <input type="text" value={this.state.folderInfo.folderName} placeholder="编辑清单"
                  onChange={this.onChange.bind(this)}
                  onKeyPress={this.keySubmit.bind(this)}
           />
@@ -118,9 +118,9 @@ export default class EditDialog extends Component{
           </div>
 
           <div className="actions btn-group operation">
-            <span className="action-icon action-icon-delete" onClick={this.onDelete.bind(this)}></span>
-            <button className="cancel-btn" onClick={this.onCancel.bind(this)}>取消</button>
-            <button className="confirm-btn" onClick={this.onSubmit.bind(this)}>保存</button>
+            <span className="action-icon action-icon-delete" onClick={this.onDelete.bind(this)} title="删除清单"></span>
+            <button className="cancel-btn" onClick={this.onCancel.bind(this)}>天生丽质</button>
+            <button className="confirm-btn" onClick={this.onSubmit.bind(this)}>世界我有</button>
           </div>
         </div>
         <DeleteDialog title={this.state.folderInfo.folderName}

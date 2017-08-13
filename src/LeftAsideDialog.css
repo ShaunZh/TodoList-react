@@ -19,7 +19,7 @@
   .leftAsideWrap .topSearchWrap {
     height: 46px;
     display: flex;
-    background-color: #668964;
+    background-color: #3e588f;
     align-items: center; }
     .leftAsideWrap .topSearchWrap .user-dialog-icon {
       color: #fff; }
@@ -59,7 +59,7 @@
   .leftAsideWrap .todoFolderItemWrap:hover {
     cursor: pointer; }
   .leftAsideWrap .todoFolderItemWrap .active {
-    background-color: #e0eefa; }
+    background-color: #bed1e8; }
   .leftAsideWrap .createFolderAction {
     position: absolute;
     bottom: 0;
