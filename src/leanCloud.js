@@ -28,7 +28,7 @@ export const TodoModel = {
 
 
   getFlagTodos(seccessFn, errorFn) {
-    let todosQuery = new AV.Query('Todo');
+    let todosQuery = new AV.Query('Todo2');
     todosQuery.include('folderObj');
     todosQuery.equalTo('isFlag', true);
     todosQuery.find().then( (todos) => {
@@ -45,8 +45,8 @@ export const TodoModel = {
   },
 
   getByUser(user, successFn, errorFn) {
-    let foldersQuery = new AV.Query('TodoFolder')
-    let todosQuery = new AV.Query('Todo');
+    let foldersQuery = new AV.Query('TodoFolder2')
+    let todosQuery = new AV.Query('Todo2');
     todosQuery.include('folderObj');
     todosQuery.find().then( (todos) => {
       let arr = [];
@@ -105,7 +105,7 @@ export const TodoModel = {
   },
 
   createFolder(title, successFn, errorFn) {
-    let TodoFolder = AV.Object.extend('TodoFolder');
+    let TodoFolder = AV.Object.extend('TodoFolder2');
     let todoFolder = new TodoFolder();
 
     todoFolder.set('folderName', title);
@@ -128,8 +128,8 @@ export const TodoModel = {
   // folderId 为要添加todo的folder 的 id
   addTodo( folderId, {todoName, isFinished, isFlag}, successFn, errorFn) {
 
-    let todoFolder = AV.Object.createWithoutData('TodoFolder', folderId);
-    let Todo = AV.Object.extend('Todo');
+    let todoFolder = AV.Object.createWithoutData('TodoFolder2', folderId);
+    let Todo = AV.Object.extend('Todo2');
     let todo = new Todo();
     todo.set('todoName', todoName);
     todo.set('isFinished', isFinished);
@@ -169,8 +169,8 @@ export const TodoModel = {
   // },
 
   deleteFolder(id, fodlerName) {
-    let todosQuery = new AV.Query('Todo');
-    let todoFolder = AV.Object.createWithoutData('TodoFolder', id);
+    let todosQuery = new AV.Query('Todo2');
+    let todoFolder = AV.Object.createWithoutData('TodoFolder2', id);
     todosQuery.include('folderObj');
     todosQuery.equalTo('folderObj', todoFolder);
     todosQuery.find().then( (response) => {
@@ -181,7 +181,7 @@ export const TodoModel = {
   // 更新TodoFolder：主要是修改Folder name
   updateTodoFolder({id, folderName, isDelete}, successFn, errorFn) {
     let _this = this;
-    let todoFolder = AV.Object.createWithoutData('TodoFolder', id);
+    let todoFolder = AV.Object.createWithoutData('TodoFolder2', id);
 
     if (isDelete === true) {
       // 删除todoFolder
@@ -204,7 +204,7 @@ export const TodoModel = {
   },
 
   update({id, todoName,  isFinished, isFlag}, successFn, errorFn) {
-    let todo = AV.Object.createWithoutData('Todo', id);
+    let todo = AV.Object.createWithoutData('Todo2', id);
     todoName !== undefined && todo.set('todoName', todoName);
     isFinished !== undefined && todo.set('isFinished', isFinished);
     isFlag !== undefined && todo.set('isFlag', isFlag);
@@ -215,7 +215,7 @@ export const TodoModel = {
   },
 
   destroyTodo(todoId, successFn, errorFn) {
-    let todo = AV.Object.createWithoutData('Todo', todoId);
+    let todo = AV.Object.createWithoutData('Todo2', todoId);
     todo.destroy().then(function(response) {
       successFn && successFn.call(null);
     }, function(error) {
@@ -226,7 +226,7 @@ export const TodoModel = {
     let folders = [];
     let foldersName = ['我的一天', 'Todo'];
     for (var i = 0; i < 2; i++ ) {
-      let TodoFolder = AV.Object.extend('TodoFolder');
+      let TodoFolder = AV.Object.extend('TodoFolder2');
       let todoFolder = new TodoFolder();
       todoFolder.set('folderName', foldersName[i]);
 

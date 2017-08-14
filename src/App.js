@@ -154,10 +154,7 @@ class App extends Component {
       let _this = this;
       TodoModel.getByUser(user, (todos) => {
         let stateCopy = JSON.parse(JSON.stringify(_this.state));
-        if (todos.length > 0) {
-          // 对服务器中获取的数据 与 本地数据进行比较， 并将最终数据输出给todoInfo
-          stateCopy.todoInfo = todos;
-        }
+        stateCopy.todoInfo = todos;
         stateCopy.accountInfo = user;
         this.setState(stateCopy);
       });

@@ -14,7 +14,7 @@ import CreateFolder from './CreateFolder';
 import EditDialog from './EditDialog';
 
 import {TodoModel, signOut} from './leanCloud';
-import IndexedDB from './IndexedDB';
+// import IndexedDB from './IndexedDB';
 
 // 显示 addFolderDialog
 function dispAddFolderDialog(){
@@ -81,10 +81,10 @@ export default class UserDialog extends React.Component {
       isActiveAddFolderDialog: false,
       newFolder: {}
     };
-    IndexedDB.init(this.props.user.username, this.props.todoInfo[0].todos, (todos) => {
-      console.log('indexedDB');
-      console.log(todos);
-    })
+    // IndexedDB.init(this.props.user.username, this.props.todoInfo[0].todos, (todos) => {
+    //   console.log('indexedDB');
+    //   console.log(todos);
+    // })
   }
 
   componentWillMount() {
