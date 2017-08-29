@@ -45,7 +45,7 @@ export const TodoModel = {
   },
 
   getByUser(user, successFn, errorFn) {
-    let foldersQuery = new AV.Query('TodoFolder2')
+    let foldersQuery = new AV.Query('TodoFolder2');
     let todosQuery = new AV.Query('Todo2');
     todosQuery.include('folderObj');
     todosQuery.find().then( (todos) => {
